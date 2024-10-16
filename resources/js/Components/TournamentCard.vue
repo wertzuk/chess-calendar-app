@@ -8,7 +8,8 @@
             {{ tournament.title }}
         </h5>
         <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
-            10.10.2024 - 12.10.2024
+            <span>{{ startDate }}</span>
+            <span v-if="endDate && endDate !== startDate">- {{ endDate }}</span>
         </p>
         <div class="flex gap-2 flex-grow-0 mt-auto">
             <Chip>{{ tournament.chess_type }}</Chip>
@@ -21,9 +22,39 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import Chip from './Chip.vue';
 
 const props = defineProps(['tournament']);
 
 console.log(props.tournament.id);
+
+const startDate = computed(() => {
+    const date = new Date(props.tournament.start_date);
+    return convertDateFormatToDDMMYYYY(date);
+});
+
+const endDate = computed(() => {
+    const date = new Date(props.tournament.end_date);
+    return convertDateFormatToDDMMYYYY(date);
+});
+
+function convertDateFormatToDDMMYYYY(date) {
+    if (!date || isNaN(date)) {
+        return null;
+    }
+
+    return `${addLeadingZero(date.getDate())}.${addLeadingZero(
+        date.getMonth() + 1
+    )}.${date.getFullYear()}`;
+}
+
+/**
+ * Add leading zero to a number if it has exactly one digit (used to properly display dates)
+ *
+ * @param {number} n
+ */
+function addLeadingZero(n) {
+    return n < 10 ? '0' + n : n;
+}
 </script>
