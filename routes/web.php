@@ -15,7 +15,7 @@ use Inertia\Inertia;
 // })->name('home');
 
 Route::get('/', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render('Home');
 })->name('home');
 
 Route::middleware('auth')->group(function () {
