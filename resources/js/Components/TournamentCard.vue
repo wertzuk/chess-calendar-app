@@ -12,7 +12,12 @@
             <span v-if="endDate && endDate !== startDate">- {{ endDate }}</span>
         </p>
         <div class="flex gap-2 flex-grow-0 mt-auto">
+            <Chip class="flex gap-1" isIconChip="true">
+                <IconLocation />
+                <span>{{ tournament.city ?? 'Berlin' }}</span>
+            </Chip>
             <Chip>{{ tournament.chess_type }}</Chip>
+            <!-- <Chip v-if="tournament.city">{{ tournament.city }}</Chip> -->
             <Chip v-if="tournament.elo_rated">ELO</Chip>
             <Chip v-if="tournament.dwz_rated">DWZ</Chip>
             <Chip v-if="tournament.rapid_elo_rated">Rapid-ELO</Chip>
@@ -24,6 +29,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import Chip from './Chip.vue';
+import IconLocation from './Icons/IconLocation.vue';
 
 const props = defineProps(['tournament']);
 
