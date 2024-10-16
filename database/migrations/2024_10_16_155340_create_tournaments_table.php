@@ -20,12 +20,13 @@ return new class extends Migration
             $table->string('time_control');
             $table->date('start_date');
             $table->date('end_date');
-            $table->enum('game_type', ['Blitz', 'Schnellschach', 'Klassisch']);
+            $table->enum('chess_type', ['Blitz', 'Schnellschach', 'Klassisch']);
             $table->string('prize_fund')->nullable();
             $table->string('format')->nullable();
             $table->string('organizer')->nullable();
             $table->string('street')->nullable();
             $table->integer('plz')->nullable();
+            $table->integer('city')->nullable();
             $table->integer('number_of_rounds')->nullable();
             $table->boolean('elo_rated')->default(0);
             $table->boolean('blitz_elo_rated')->default(0);
