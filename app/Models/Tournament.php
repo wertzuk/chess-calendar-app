@@ -13,6 +13,6 @@ class Tournament extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class)->withDefault();
+        return $this->belongsTo(User::class);
     }
 }
