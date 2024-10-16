@@ -4,17 +4,17 @@ import Chip from './Chip.vue';
 
 <template>
     <div
-        class="max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        class="p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col"
     >
         <h5
             class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white"
         >
             Wittlicher Stadtmeisterschaft
         </h5>
-        <p class="mb-2 font-normal text-sm text-gray-700 dark:text-gray-400">
+        <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
             10.10.2024 - 12.10.2024
         </p>
-        <div class="mt-6 flex gap-2">
+        <div class="flex gap-2 flex-grow-0 mt-auto">
             <Chip>Blitz</Chip>
             <Chip>ELO</Chip>
         </div>
