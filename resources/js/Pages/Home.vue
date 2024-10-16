@@ -1,5 +1,5 @@
 <script setup>
-import Card from '@/Components/Card.vue';
+import TournamentCard from '@/Components/TournamentCard.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Head } from '@inertiajs/vue3';
 </script>
@@ -18,10 +18,11 @@ import { Head } from '@inertiajs/vue3';
                 </div>
             </div>
             <div class="mt-8 grid grid-cols-fill-300 gap-4 mx-auto">
-                <Card />
-                <Card />
-                <Card />
-                <Card />
+                <TournamentCard
+                    :tournament="tournament"
+                    v-for="tournament in $page.props.tournaments"
+                    :key="tournament.id"
+                />
             </div>
         </div>
     </MainLayout>
