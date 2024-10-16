@@ -15,6 +15,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            gridTemplateColumns: {
+                'fill-300': 'repeat(auto-fill, minmax(300px, 1fr))',
+            },
         },
     },
 
