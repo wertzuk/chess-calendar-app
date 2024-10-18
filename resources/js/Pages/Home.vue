@@ -1,9 +1,3 @@
-<script setup>
-import TournamentCard from '@/Components/TournamentCard.vue';
-import MainLayout from '@/Layouts/MainLayout.vue';
-import { Head } from '@inertiajs/vue3';
-</script>
-
 <template>
     <Head title="Home" />
 
@@ -17,13 +11,55 @@ import { Head } from '@inertiajs/vue3';
                     <p v-else>Hello guest!</p>
                 </div>
             </div>
-            <div class="mt-8 grid grid-cols-fill-300 gap-4 mx-auto">
-                <TournamentCard
-                    :tournament="tournament"
-                    v-for="tournament in $page.props.tournaments"
-                    :key="tournament.id"
-                />
+            <div v-for="(group, month) in groupedTournaments" :key="date">
+                {{ month }}
+
+                <div class="mt-8 grid grid-cols-fill-300 gap-4 mx-auto">
+                    <TournamentCard
+                        :tournament="tournament"
+                        v-for="tournament in group"
+                        :key="tournament.id"
+                    />
+                </div>
             </div>
         </div>
     </MainLayout>
 </template>
+
+<script setup>
+import { computed } from 'vue';
+import TournamentCard from '@/Components/TournamentCard.vue';
+import MainLayout from '@/Layouts/MainLayout.vue';
+import { Head } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
+const tournaments = computed(() => usePage().props.tournaments);
+
+groupTournaments(tournaments.value);
+const groupedTournaments = computed(() => groupTournaments(tournaments.value));
+console.log(groupedTournaments.value);
+
+/**
+ * Group tournaments by month
+ *
+ * @param {array} tournaments
+ */
+function groupTournaments(tournaments) {
+    return tournaments.reduce((grouped, event) => {
+        const transformedDate = transformDate(new Date(event.start_date));
+        if (!grouped[transformedDate]) {
+            grouped[transformedDate] = [];
+        }
+        grouped[transformedDate].push(event);
+        return grouped;
+    }, {});
+}
+
+function transformDate(date) {
+    const options = {
+        year: 'numeric',
+        month: 'long',
+    };
+
+    return date.toLocaleDateString('de-DE', options);
+}
+</script>

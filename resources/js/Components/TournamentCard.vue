@@ -33,8 +33,6 @@ import IconLocation from './Icons/IconLocation.vue';
 
 const props = defineProps(['tournament']);
 
-console.log(props.tournament.id);
-
 const startDate = computed(() => {
     const date = new Date(props.tournament.start_date);
     return convertDateFormatToDDMMYYYY(date);
