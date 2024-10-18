@@ -3,6 +3,9 @@
 
     <MainLayout>
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+            <div class="mb-10">
+                <IconButton>Turnier erstellen</IconButton>
+            </div>
             <div
                 class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"
             ></div>
@@ -38,6 +41,8 @@ import TournamentCard from '@/Components/TournamentCard.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
+import IconButton from '@/Components/Buttons/IconButton.vue';
 const tournaments = computed(() => usePage().props.tournaments);
 
 groupTournaments(tournaments.value);
