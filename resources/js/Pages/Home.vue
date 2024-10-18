@@ -5,22 +5,28 @@
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
             <div
                 class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"
-            >
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <p v-if="$page.props.auth.user">You're logged in!</p>
-                    <p v-else>Hello guest!</p>
-                </div>
-            </div>
+            ></div>
             <div v-for="(group, month) in groupedTournaments" :key="date">
-                {{ month }}
-
-                <div class="mt-8 grid grid-cols-fill-300 gap-4 mx-auto">
-                    <TournamentCard
-                        :tournament="tournament"
-                        v-for="tournament in group"
-                        :key="tournament.id"
-                    />
-                </div>
+                <ol
+                    class="relative border-s border-gray-200 dark:border-gray-700"
+                >
+                    <li class="ms-4 pb-12">
+                        <div
+                            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"
+                        ></div>
+                        <time
+                            class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
+                            >{{ month }}</time
+                        >
+                        <div class="mt-2 grid grid-cols-fill-300 gap-4 mx-auto">
+                            <TournamentCard
+                                :tournament="tournament"
+                                v-for="tournament in group"
+                                :key="tournament.id"
+                            />
+                        </div>
+                    </li>
+                </ol>
             </div>
         </div>
     </MainLayout>
@@ -44,7 +50,10 @@ console.log(groupedTournaments.value);
  * @param {array} tournaments
  */
 function groupTournaments(tournaments) {
-    return tournaments.reduce((grouped, event) => {
+    const sortedTournaments = tournaments.sort(
+        (a, b) => new Date(a.start_date) - new Date(b.start_date)
+    );
+    return sortedTournaments.reduce((grouped, event) => {
         const transformedDate = transformDate(new Date(event.start_date));
         if (!grouped[transformedDate]) {
             grouped[transformedDate] = [];
