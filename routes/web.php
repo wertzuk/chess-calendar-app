@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/', [TournamentController::class, 'index'])->name('home');
 
 Route::middleware('auth')->group(function () {
@@ -13,3 +14,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+// Workaround for breeze authentication
+Route::redirect('/dashboard', '/')->name('dashboard');
