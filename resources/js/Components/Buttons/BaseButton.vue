@@ -7,7 +7,6 @@
             hoverClasses,
             darkModeClasses,
         ]"
-        :type="type"
     >
         <slot></slot>
     </button>
@@ -15,10 +14,6 @@
 
 <script setup>
 const props = defineProps({
-    type: {
-        type: String,
-        default: 'button',
-    },
     customClasses: {
         type: String,
         default: '', // Allow extending with specific classes
