@@ -9,7 +9,8 @@
             <input type="hidden" name="_token" :value="page.props.csrf_token" />
 
             <FormInput fieldKey="title">Turnier</FormInput>
-            <FormDatePicker modelValue="12-12-2024" fieldKey="start_date" />
+            <FormDatePicker fieldKey="start_date">Startdatum</FormDatePicker>
+            <FormDatePicker fieldKey="end_date">Enddatum</FormDatePicker>
             <FormInput fieldKey="time_control">Zeitkontrolle</FormInput>
             <FormInput fieldKey="street">Straße</FormInput>
             <FormInput fieldKey="plz">PLZ</FormInput>
