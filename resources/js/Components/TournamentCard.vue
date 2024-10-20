@@ -9,7 +9,9 @@
         </h5>
         <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
             <span>{{ startDate }}</span>
-            <span v-if="endDate && endDate !== startDate">- {{ endDate }}</span>
+            <span v-if="endDate && endDate !== startDate">
+                - {{ endDate }}</span
+            >
         </p>
         <div class="flex gap-2 flex-grow-0 mt-auto">
             <Chip class="flex gap-1" isIconChip="true">
