@@ -1,8 +1,8 @@
 <template>
     <div class="flex items-center mb-4">
         <input
-            :id="fieldKey"
             type="checkbox"
+            :id="fieldKey"
             :name="fieldKey"
             :checked="modelValue"
             :value="currentValue"
