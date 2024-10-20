@@ -1,6 +1,6 @@
 <template>
     <FormLabel :for="fieldKey"><slot></slot></FormLabel>
-    <div class="relative max-w-sm -mt-4">
+    <div class="relative max-w-sm mb-6">
         <div
             class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
         >
@@ -39,5 +39,4 @@ defineOptions({
     inheritAttrs: false,
 });
 const props = defineProps(['modelValue', 'fieldKey']);
-console.log(props.fieldKey);
 </script>

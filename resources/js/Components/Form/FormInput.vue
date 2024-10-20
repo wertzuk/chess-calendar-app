@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="mb-6">
         <FormLabel :fieldKey="fieldKey"><slot></slot></FormLabel>
         <input
             type="text"
