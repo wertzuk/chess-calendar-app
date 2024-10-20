@@ -15,10 +15,7 @@
             <FormInput fieldKey="time_control" required
                 >Zeitkontrolle</FormInput
             >
-            <FormDatePicker
-                fieldKey="start_date"
-                :modelValue="convertDateToGermanFormat('2024-12-12')"
-                required
+            <FormDatePicker fieldKey="start_date" required
                 >Startdatum</FormDatePicker
             >
             <FormDatePicker fieldKey="end_date" required
@@ -70,15 +67,7 @@ import FormDatePicker from '@/Components/Form/FormDatePicker.vue';
 import FormSelect from '@/Components/Form/FormSelect.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 
-const form = ref({});
 const page = usePage();
 
 let props = defineProps(['errors']);
-
-function convertDateToGermanFormat(date) {
-    const [year, month, day] = date.split('-');
-    return `${day}.${month}.${year}`;
-}
-
-function submit() {}
 </script>
