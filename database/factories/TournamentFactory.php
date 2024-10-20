@@ -18,14 +18,15 @@ class TournamentFactory extends Factory
     public function definition(): array
     {
 
-        $date = fake()->dateTimeBetween('+0 days', '+2 years');
+        $date = fake()->dateTimeBetween('+0 days', '+100 days')->format('Y-m-d');
+        $end = fake()->dateTimeBetween('+100 days', '+110 days')->format('Y-m-d');
         return [
             'title' => fake()->text(50),
             'user_id' => User::factory(),
             'chess_type' => fake()->randomElement(['Blitz', 'Schnellschach', 'Klassisch']),
             'time_control' => fake()->numberBetween(1,100) . '+0',
             'start_date' => $date,
-            'end_date' => $date->add(new \DateInterval('P7D')),
+            'end_date' => $end,
         ];
     }
 }
