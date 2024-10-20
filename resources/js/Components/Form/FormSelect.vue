@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-6">
+    <div class="mb-6 basis-full">
         <label
             :for="fieldKey"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
