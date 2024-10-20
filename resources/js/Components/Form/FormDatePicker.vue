@@ -19,12 +19,12 @@
         <input
             inline-datepicker
             datepicker-autohide
-            datepicker-format="dd.mm.yyyy"
-            datepicker-min-date=""
+            datepicker-format="yyyy-mm-dd"
+            :datepicker-min-date="new Date().toISOString().split('T')[0]"
             :id="fieldKey"
             :name="fieldKey"
             :value="modelValue"
-            @input="$emit('update:modelValue', $event.target.value)"
+            @changeDate="$emit('update:modelValue', $event.target.value)"
             type="text"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Select date"
@@ -34,9 +34,11 @@
 
 <script setup>
 import FormLabel from './FormLabel.vue';
+// import { Datepicker } from 'flowbite';
 
 defineOptions({
     inheritAttrs: false,
 });
 const props = defineProps(['modelValue', 'fieldKey']);
+defineEmits(['update:modelValue']);
 </script>
