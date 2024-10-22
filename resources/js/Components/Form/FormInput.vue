@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-6 w-full group">
+    <div class="mb-6 w-full">
         <FormLabel :fieldKey="fieldKey"><slot></slot></FormLabel>
         <input
             type="text"
