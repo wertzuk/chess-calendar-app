@@ -2,16 +2,12 @@
     <div
         class="p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col"
     >
-        <h5
-            class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white"
-        >
+        <h5 class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ tournament.title }}
         </h5>
         <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
             <span>{{ startDate }}</span>
-            <span v-if="endDate && endDate !== startDate">
-                - {{ endDate }}</span
-            >
+            <span v-if="endDate && endDate !== startDate"> - {{ endDate }}</span>
         </p>
         <div class="flex gap-2 flex-grow-0 mt-auto">
             <Chip class="flex gap-1" isIconChip="true">

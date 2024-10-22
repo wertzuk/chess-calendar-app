@@ -3,15 +3,9 @@
 
     <MainLayout>
         <div class="mb-10">
-            <IconButton
-                ><a :href="route('tournaments.create')"
-                    >Turnier erstellen</a
-                ></IconButton
-            >
+            <IconButton><a :href="route('tournaments.create')">Turnier erstellen</a></IconButton>
         </div>
-        <div
-            class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"
-        ></div>
+        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"></div>
         <div v-for="(group, month) in groupedTournaments" :key="date">
             <ol class="relative border-s border-gray-200 dark:border-gray-700">
                 <li class="ms-4 pb-12">

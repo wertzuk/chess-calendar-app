@@ -1,5 +1,5 @@
 <script setup>
-import { Head, Link } from "@inertiajs/vue3";
+import { Head, Link } from '@inertiajs/vue3';
 
 defineProps({
     canLogin: {
@@ -19,10 +19,10 @@ defineProps({
 });
 
 function handleImageError() {
-    document.getElementById("screenshot-container")?.classList.add("!hidden");
-    document.getElementById("docs-card")?.classList.add("!row-span-1");
-    document.getElementById("docs-card-content")?.classList.add("!flex-row");
-    document.getElementById("background")?.classList.add("!hidden");
+    document.getElementById('screenshot-container')?.classList.add('!hidden');
+    document.getElementById('docs-card')?.classList.add('!row-span-1');
+    document.getElementById('docs-card-content')?.classList.add('!flex-row');
+    document.getElementById('background')?.classList.add('!hidden');
 }
 </script>
 
@@ -38,9 +38,7 @@ function handleImageError() {
             class="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white"
         >
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                <header
-                    class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3"
-                >
+                <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
                     <div class="flex lg:col-start-2 lg:justify-center">
                         <svg
                             class="h-12 w-auto text-white lg:h-16 lg:text-[#FF2D20]"
@@ -109,9 +107,7 @@ function handleImageError() {
                                 ></div>
                             </div>
 
-                            <div
-                                class="relative flex items-center gap-6 lg:items-end"
-                            >
+                            <div class="relative flex items-center gap-6 lg:items-end">
                                 <div
                                     id="docs-card-content"
                                     class="flex items-start gap-6 lg:flex-col"
@@ -144,13 +140,10 @@ function handleImageError() {
                                         </h2>
 
                                         <p class="mt-4 text-sm/relaxed">
-                                            Laravel has wonderful documentation
-                                            covering every aspect of the
-                                            framework. Whether you are a
-                                            newcomer or have prior experience
-                                            with Laravel, we recommend reading
-                                            our documentation from beginning to
-                                            end.
+                                            Laravel has wonderful documentation covering every
+                                            aspect of the framework. Whether you are a newcomer or
+                                            have prior experience with Laravel, we recommend reading
+                                            our documentation from beginning to end.
                                         </p>
                                     </div>
                                 </div>
@@ -193,18 +186,14 @@ function handleImageError() {
                             </div>
 
                             <div class="pt-3 sm:pt-5">
-                                <h2
-                                    class="text-xl font-semibold text-black dark:text-white"
-                                >
+                                <h2 class="text-xl font-semibold text-black dark:text-white">
                                     Laracasts
                                 </h2>
 
                                 <p class="mt-4 text-sm/relaxed">
-                                    Laracasts offers thousands of video
-                                    tutorials on Laravel, PHP, and JavaScript
-                                    development. Check them out, see for
-                                    yourself, and massively level up your
-                                    development skills in the process.
+                                    Laracasts offers thousands of video tutorials on Laravel, PHP,
+                                    and JavaScript development. Check them out, see for yourself,
+                                    and massively level up your development skills in the process.
                                 </p>
                             </div>
 
@@ -251,18 +240,14 @@ function handleImageError() {
                             </div>
 
                             <div class="pt-3 sm:pt-5">
-                                <h2
-                                    class="text-xl font-semibold text-black dark:text-white"
-                                >
+                                <h2 class="text-xl font-semibold text-black dark:text-white">
                                     Laravel News
                                 </h2>
 
                                 <p class="mt-4 text-sm/relaxed">
-                                    Laravel News is a community driven portal
-                                    and newsletter aggregating all of the latest
-                                    and most important news in the Laravel
-                                    ecosystem, including new package releases
-                                    and tutorials.
+                                    Laravel News is a community driven portal and newsletter
+                                    aggregating all of the latest and most important news in the
+                                    Laravel ecosystem, including new package releases and tutorials.
                                 </p>
                             </div>
 
@@ -302,15 +287,13 @@ function handleImageError() {
                             </div>
 
                             <div class="pt-3 sm:pt-5">
-                                <h2
-                                    class="text-xl font-semibold text-black dark:text-white"
-                                >
+                                <h2 class="text-xl font-semibold text-black dark:text-white">
                                     Vibrant Ecosystem
                                 </h2>
 
                                 <p class="mt-4 text-sm/relaxed">
-                                    Laravel's robust library of first-party
-                                    tools and libraries, such as
+                                    Laravel's robust library of first-party tools and libraries,
+                                    such as
                                     <a
                                         href="https://forge.laravel.com"
                                         class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white dark:focus-visible:ring-[#FF2D20]"
@@ -336,9 +319,8 @@ function handleImageError() {
                                         class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
                                         >Herd</a
                                     >
-                                    help you take your projects to the next
-                                    level. Pair them with powerful open source
-                                    libraries like
+                                    help you take your projects to the next level. Pair them with
+                                    powerful open source libraries like
                                     <a
                                         href="https://laravel.com/docs/billing"
                                         class="rounded-sm underline hover:text-black focus:outline-none focus-visible:ring-1 focus-visible:ring-[#FF2D20] dark:hover:text-white"
@@ -375,9 +357,7 @@ function handleImageError() {
                     </div>
                 </main>
 
-                <footer
-                    class="py-16 text-center text-sm text-black dark:text-white/70"
-                >
+                <footer class="py-16 text-center text-sm text-black dark:text-white/70">
                     Laravel v{{ laravelVersion }} (PHP v{{ phpVersion }})
                 </footer>
             </div>
