@@ -2,30 +2,37 @@
     <Head title="Home" />
 
     <MainLayout>
+        <MainHeading>Schachturnier-Kalender</MainHeading>
         <div class="mb-10">
-            <IconButton><a :href="route('tournaments.create')">Turnier erstellen</a></IconButton>
+            <IconButton
+                ><Link :href="route('tournaments.create')" preserve-scroll as="button"
+                    >Turnier erstellen</Link
+                ></IconButton
+            >
         </div>
-        <div class="overflow-hidden bg-white shadow-sm sm:rounded-lg dark:bg-gray-800"></div>
-        <div v-for="(group, month) in groupedTournaments" :key="date">
-            <ol class="relative border-s border-gray-200 dark:border-gray-700">
-                <li class="ms-4 pb-12">
-                    <div
-                        class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"
-                    ></div>
-                    <time
-                        class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
-                        >{{ month }}</time
-                    >
-                    <div class="mt-2 grid grid-cols-fill-300 gap-4 mx-auto">
-                        <TournamentCard
-                            :tournament="tournament"
-                            v-for="tournament in group"
-                            :key="tournament.id"
-                        />
-                    </div>
-                </li>
-            </ol>
+        <div v-if="tournaments.length">
+            <div v-for="(group, month) in groupedTournaments" :key="date">
+                <ol class="relative border-s border-gray-200 dark:border-gray-700">
+                    <li class="ms-4 pb-12">
+                        <div
+                            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"
+                        ></div>
+                        <time
+                            class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
+                            >{{ month }}</time
+                        >
+                        <div class="mt-2 grid grid-cols-fill-300 gap-4 mx-auto">
+                            <TournamentCard
+                                :tournament="tournament"
+                                v-for="tournament in group"
+                                :key="tournament.id"
+                            />
+                        </div>
+                    </li>
+                </ol>
+            </div>
         </div>
+        <div v-else><Paragraph>Keine Turniere gefunden!</Paragraph></div>
     </MainLayout>
 </template>
 
@@ -36,6 +43,9 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import IconButton from '@/Components/Buttons/IconButton.vue';
+import { Link } from '@inertiajs/vue3';
+import Paragraph from '@/Components/Paragraph.vue';
+import MainHeading from '@/Components/MainHeading.vue';
 
 const tournaments = computed(() => usePage().props.tournaments);
 groupTournaments(tournaments.value);
