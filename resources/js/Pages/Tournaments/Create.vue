@@ -1,41 +1,97 @@
 <template>
     <MainLayout>
-        <!-- Display errors -->
-        <div v-if="Object.keys(errors).length" class="alert alert-danger text-white">
-            {{ errors }}
-        </div>
-        <!-- <h1>Turnier erstellen</h1> -->
-        <form :action="route('tournaments.store')" method="post" class="max-w-lg mx-auto">
-            <input type="hidden" name="_token" :value="page.props.csrf_token" />
+        <!-- {{ form.errors }} -->
+        <form method="post" @submit.prevent="submit" class="max-w-lg mx-auto">
+            <!-- <input type="hidden" name="_token" :value="page.props.csrf_token" /> -->
 
-            <FormInput fieldKey="title">Turnier</FormInput>
+            <FormInput v-model="form.title" fieldKey="title" :error="form.errors.title" required
+                >Turnier</FormInput
+            >
             <FormRow>
-                <FormInput fieldKey="city">Ort</FormInput>
-                <FormSelect fieldKey="chess_type" :options="['Klassisch', 'Schnellschach', 'Blitz']"
+                <FormInput v-model="form.city" fieldKey="city" :error="form.errors.city" required
+                    >Ort</FormInput
+                >
+                <FormSelect
+                    v-model="form.chess_type"
+                    fieldKey="chess_type"
+                    :options="['Klassisch', 'Schnellschach', 'Blitz']"
+                    required
                     >Form</FormSelect
                 >
             </FormRow>
             <FormRow>
-                <FormDatePicker fieldKey="start_date" required>Startdatum</FormDatePicker>
-                <FormDatePicker fieldKey="end_date" required>Enddatum</FormDatePicker>
+                <FormDatePicker v-model="form.start_date" fieldKey="start_date" required
+                    >Startdatum</FormDatePicker
+                >
+                <FormDatePicker v-model="form.end_date" fieldKey="end_date"
+                    >Enddatum</FormDatePicker
+                >
             </FormRow>
             <FormRow class="mb-10">
-                <FormInput fieldKey="time_control" required>Zeitkontrolle</FormInput>
-                <FormInput fieldKey="number_of_rounds" type="number">Anzahl Runden</FormInput>
+                <FormInput
+                    v-model="form.time_control"
+                    fieldKey="time_control"
+                    required
+                    :error="form.errors.time_control"
+                    >Zeitkontrolle</FormInput
+                >
+                <FormInput
+                    v-model="form.number_of_rounds"
+                    fieldKey="number_of_rounds"
+                    type="number"
+                    :error="form.errors.number_of_rounds"
+                    >Anzahl Runden</FormInput
+                >
             </FormRow>
             <FormRow>
-                <FormInput fieldKey="street">Straße</FormInput>
-                <FormInput fieldKey="plz">PLZ</FormInput>
+                <FormInput v-model="form.street" fieldKey="street" :error="form.errors.street"
+                    >Straße</FormInput
+                >
+                <FormInput v-model="form.plz" fieldKey="plz" :error="form.errors.plz"
+                    >PLZ</FormInput
+                >
             </FormRow>
-            <FormInput fieldKey="organizer">Ausrichter</FormInput>
+            <FormInput v-model="form.organizer" fieldKey="organizer" :error="form.errors.organizer"
+                >Ausrichter</FormInput
+            >
 
-            <FormCheckbox fieldKey="elo_rated">ELO Auswertung</FormCheckbox>
-            <FormCheckbox fieldKey="dwz_rated">DWZ Auswertung</FormCheckbox>
-            <FormCheckbox fieldKey="rapid_elo_rated">Rapid ELO Auswertung</FormCheckbox>
-            <FormCheckbox fieldKey="blitz_elo_rated">Blitz ELO Auswertung</FormCheckbox>
-            <FormInput type="url" fieldKey="chess_results_link">Chess-Results Link</FormInput>
-            <FormInput type="url" fieldKey="website_link">Link zur Webseite</FormInput>
-            <FormInput type="url" fieldKey="announcement_link">Link zur Ausschreibung</FormInput>
+            <FormRow>
+                <FormCheckbox v-model="form.elo_rated" fieldKey="elo_rated"
+                    >ELO Auswertung</FormCheckbox
+                >
+                <FormCheckbox v-model="form.dwz_rated" fieldKey="dwz_rated"
+                    >DWZ Auswertung</FormCheckbox
+                >
+            </FormRow>
+            <FormRow>
+                <FormCheckbox v-model="form.rapid_elo_rated" fieldKey="rapid_elo_rated"
+                    >Rapid ELO Auswertung</FormCheckbox
+                >
+                <FormCheckbox v-model="form.blitz_elo_rated" fieldKey="blitz_elo_rated"
+                    >Blitz ELO Auswertung</FormCheckbox
+                >
+            </FormRow>
+            <FormInput
+                type="url"
+                v-model="form.chess_results_link"
+                fieldKey="chess_results_link"
+                :error="form.errors.chess_results_link"
+                >Chess-Results Link</FormInput
+            >
+            <FormInput
+                type="url"
+                v-model="form.website_link"
+                fieldKey="website_link"
+                :error="form.errors.website_link"
+                >Link zur Webseite</FormInput
+            >
+            <FormInput
+                type="url"
+                v-model="form.announcement_link"
+                fieldKey="announcement_link"
+                :error="form.errors.announcement_link"
+                >Link zur Ausschreibung</FormInput
+            >
 
             <PrimaryButton class="mt-8">Erstellen</PrimaryButton>
         </form>
@@ -43,8 +99,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { router, usePage } from '@inertiajs/vue3';
 import FormInput from '@/Components/Form/FormInput.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
@@ -52,8 +107,33 @@ import FormDatePicker from '@/Components/Form/FormDatePicker.vue';
 import FormSelect from '@/Components/Form/FormSelect.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 import FormRow from '@/Components/Form/FormRow.vue';
+import { useForm } from '@inertiajs/vue3';
 
 const page = usePage();
+
+const form = useForm({
+    title: null,
+    city: null,
+    chess_type: null,
+    start_date: null,
+    end_date: null,
+    time_control: null,
+    number_of_rounds: null,
+    street: null,
+    plz: null,
+    organizer: null,
+    elo_rated: null,
+    dwz_rated: null,
+    blitz_elo_rated: null,
+    rapid_elo_rated: null,
+    chess_results_link: null,
+    website_link: null,
+    announcement_link: null,
+});
+
+function submit() {
+    form.post(route('tournaments.store'));
+}
 
 let props = defineProps(['errors']);
 </script>

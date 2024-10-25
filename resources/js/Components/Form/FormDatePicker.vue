@@ -29,6 +29,10 @@
                 placeholder="Select date"
             />
         </div>
+
+        <p class="mt-2 text-sm text-red-600 dark:text-red-500" v-if="error">
+            {{ error }}
+        </p>
     </div>
 </template>
 
@@ -39,6 +43,6 @@ import FormLabel from './FormLabel.vue';
 defineOptions({
     inheritAttrs: false,
 });
-const props = defineProps(['modelValue', 'fieldKey']);
+const props = defineProps(['modelValue', 'fieldKey', 'error']);
 defineEmits(['update:modelValue']);
 </script>
