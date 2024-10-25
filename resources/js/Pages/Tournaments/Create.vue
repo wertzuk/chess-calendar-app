@@ -4,11 +4,21 @@
         <form method="post" @submit.prevent="submit" class="max-w-lg mx-auto">
             <!-- <input type="hidden" name="_token" :value="page.props.csrf_token" /> -->
 
-            <FormInput v-model="form.title" fieldKey="title" :error="form.errors.title" required
+            <FormInput
+                v-model="form.title"
+                fieldKey="title"
+                :error="form.errors.title"
+                required
+                maxlength="100"
                 >Turnier</FormInput
             >
             <FormRow>
-                <FormInput v-model="form.city" fieldKey="city" :error="form.errors.city" required
+                <FormInput
+                    v-model="form.city"
+                    fieldKey="city"
+                    :error="form.errors.city"
+                    required
+                    maxlength="50"
                     >Ort</FormInput
                 >
                 <FormSelect
@@ -33,25 +43,36 @@
                     fieldKey="time_control"
                     required
                     :error="form.errors.time_control"
+                    maxlength="50"
                     >Zeitkontrolle</FormInput
                 >
                 <FormInput
                     v-model="form.number_of_rounds"
                     fieldKey="number_of_rounds"
                     type="number"
+                    min="0"
+                    max="100"
                     :error="form.errors.number_of_rounds"
                     >Anzahl Runden</FormInput
                 >
             </FormRow>
             <FormRow>
-                <FormInput v-model="form.street" fieldKey="street" :error="form.errors.street"
+                <FormInput
+                    v-model="form.street"
+                    fieldKey="street"
+                    :error="form.errors.street"
+                    maxlength="50"
                     >Straße</FormInput
                 >
-                <FormInput v-model="form.plz" fieldKey="plz" :error="form.errors.plz"
+                <FormInput v-model="form.plz" fieldKey="plz" :error="form.errors.plz" maxlength="7"
                     >PLZ</FormInput
                 >
             </FormRow>
-            <FormInput v-model="form.organizer" fieldKey="organizer" :error="form.errors.organizer"
+            <FormInput
+                v-model="form.organizer"
+                fieldKey="organizer"
+                :error="form.errors.organizer"
+                maxlength="50"
                 >Ausrichter</FormInput
             >
 
@@ -99,7 +120,7 @@
 </template>
 
 <script setup>
-import { router, usePage } from '@inertiajs/vue3';
+import { usePage } from '@inertiajs/vue3';
 import FormInput from '@/Components/Form/FormInput.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
