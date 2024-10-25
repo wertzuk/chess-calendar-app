@@ -1,6 +1,6 @@
 <template>
     <MainLayout>
-        <!-- {{ form.errors }} -->
+        {{ form.errors }}
         <form method="post" @submit.prevent="submit" class="max-w-lg mx-auto">
             <!-- <input type="hidden" name="_token" :value="page.props.csrf_token" /> -->
 
@@ -30,10 +30,17 @@
                 >
             </FormRow>
             <FormRow>
-                <FormDatePicker v-model="form.start_date" fieldKey="start_date" required
+                <FormDatePicker
+                    v-model="form.start_date"
+                    fieldKey="start_date"
+                    required
+                    :error="form.errors.start_date"
                     >Startdatum</FormDatePicker
                 >
-                <FormDatePicker v-model="form.end_date" fieldKey="end_date"
+                <FormDatePicker
+                    v-model="form.end_date"
+                    fieldKey="end_date"
+                    :error="form.errors.end_date"
                     >Enddatum</FormDatePicker
                 >
             </FormRow>
@@ -135,7 +142,7 @@ const page = usePage();
 const form = useForm({
     title: null,
     city: null,
-    chess_type: null,
+    chess_type: 'Klassisch',
     start_date: null,
     end_date: null,
     time_control: null,
@@ -143,10 +150,10 @@ const form = useForm({
     street: null,
     plz: null,
     organizer: null,
-    elo_rated: null,
-    dwz_rated: null,
-    blitz_elo_rated: null,
-    rapid_elo_rated: null,
+    elo_rated: 0,
+    dwz_rated: 0,
+    blitz_elo_rated: 0,
+    rapid_elo_rated: 0,
     chess_results_link: null,
     website_link: null,
     announcement_link: null,
