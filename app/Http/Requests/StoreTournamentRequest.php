@@ -22,16 +22,22 @@ class StoreTournamentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required',
-            'time_control' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required',
-            'chess_type' => 'required',
-            'city' => 'required',
+            'title' => 'required|max:100',
+            'time_control' => 'required|max:50',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'chess_type' => 'required', 
+            'city' => 'required|max:50',
+            'number_of_rounds' => 'nullable|integer',
+            'street' => 'nullable|max:50',
+            'plz' => 'nullable|integer',
             'elo_rated' => 'boolean',
             'dwz_rated' => 'boolean',
             'blitz_elo_rated' => 'boolean',
             'rapid_elo_rated' => 'boolean',
+            'chess_results_link' => 'nullable|url',
+            'website_link' => 'nullable|url',
+            'announcement_link' => 'nullable|url',
         ];
     }
 }
