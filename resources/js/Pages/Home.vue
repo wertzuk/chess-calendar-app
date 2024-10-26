@@ -4,10 +4,8 @@
     <MainLayout>
         <MainHeading>Schachturnier-Kalender</MainHeading>
         <div class="mb-10">
-            <IconButton
-                ><Link :href="route('tournaments.create')" preserve-scroll as="button"
-                    >Turnier erstellen</Link
-                ></IconButton
+            <LinkButton :href="route('tournaments.create')" preserve-scroll as="button"
+                >Turnier erstellen</LinkButton
             >
         </div>
         <div v-if="tournaments.length">
@@ -46,8 +44,9 @@ import IconButton from '@/Components/Buttons/IconButton.vue';
 import { Link } from '@inertiajs/vue3';
 import Paragraph from '@/Components/Paragraph.vue';
 import MainHeading from '@/Components/MainHeading.vue';
+import LinkButton from '@/Components/Buttons/LinkButton.vue';
 
-const tournaments = computed(() => usePage().props.tournaments);
+const tournaments = computed(() => usePage().props.tournaments ?? []);
 groupTournaments(tournaments.value);
 const groupedTournaments = computed(() => groupTournaments(tournaments.value));
 
