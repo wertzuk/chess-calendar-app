@@ -2,7 +2,6 @@
     <MainLayout>
         <!-- {{ form.errors }} -->
         <SecondaryHeading class="text-center mb-6">Turnier erstellen</SecondaryHeading>
-        <!-- <LinkButton href="/">Zurück</LinkButton> -->
 
         <form method="post" @submit.prevent="submit" class="max-w-lg mx-auto">
             <FormInput
@@ -128,14 +127,17 @@
                 >
             </div>
 
-            <PrimaryButton class="mt-8">Erstellen</PrimaryButton>
+            <div class="flex justify-between">
+                <LinkButton class="mt-8" href="/">Zurück</LinkButton>
+                <PrimaryButton class="mt-8">Erstellen</PrimaryButton>
+            </div>
         </form>
     </MainLayout>
 </template>
 
 <script setup>
 import { ref } from 'vue';
-import { usePage } from '@inertiajs/vue3';
+import { useForm } from '@inertiajs/vue3';
 import FormInput from '@/Components/Form/FormInput.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
@@ -143,15 +145,9 @@ import FormDatePicker from '@/Components/Form/FormDatePicker.vue';
 import FormSelect from '@/Components/Form/FormSelect.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 import FormRow from '@/Components/Form/FormRow.vue';
-import { useForm } from '@inertiajs/vue3';
-import { Link } from '@inertiajs/vue3';
-import MainHeading from '@/Components/MainHeading.vue';
 import SecondaryHeading from '@/Components/SecondaryHeading.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
-import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
 import FormCollapseButton from '@/Components/Form/FormCollapseButton.vue';
-
-const page = usePage();
 
 const form = useForm({
     title: null,
