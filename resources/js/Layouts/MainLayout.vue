@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from 'vue';
-import Dropdown from '@/Components/Dropdown.vue';
-import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
+import Dropdown from '@/Components/Menu/MenuDropdown.vue';
+import DropdownLink from '@/Components/Menu/MenuDropdownLink.vue';
+import NavLink from '@/Components/Menu/MenuNavLink.vue';
+import ResponsiveNavLink from '@/Components/Menu/MenuNavLinkResponsive.vue';
 import { Link } from '@inertiajs/vue3';
 
 const showingNavigationDropdown = ref(false);
