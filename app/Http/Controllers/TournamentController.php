@@ -36,7 +36,7 @@ class TournamentController extends Controller
         $data['user_id'] = auth()->id();
         Tournament::create($data);
 
-        return Inertia::render('Tournaments/Create');
+        return Inertia::render('Home');
 
     }
 
