@@ -21,6 +21,9 @@
             <Chip v-if="tournament.rapid_elo_rated">Rapid-ELO</Chip>
             <Chip v-if="tournament.blitz_elo_rated">Blitz-ELO</Chip>
         </div>
+        <LinkButton class="mt-4" :href="route('tournaments.edit', { id: tournament.id })"
+            >Bearbeiten</LinkButton
+        >
     </div>
 </template>
 
@@ -28,6 +31,7 @@
 import { computed } from 'vue';
 import Chip from './Chip.vue';
 import IconLocation from './Icons/IconLocation.vue';
+import LinkButton from './Buttons/LinkButton.vue';
 
 const props = defineProps(['tournament']);
 
