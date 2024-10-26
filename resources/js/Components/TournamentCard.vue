@@ -29,9 +29,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import Chip from './Chip.vue';
-import IconLocation from './Icons/IconLocation.vue';
-import LinkButton from './Buttons/LinkButton.vue';
+import Chip from '@/Components/Common/Chip.vue';
+import IconLocation from '@/Components/Icons/IconLocation.vue';
+import LinkButton from '@/Components/Buttons/LinkButton.vue';
 
 const props = defineProps(['tournament']);
 

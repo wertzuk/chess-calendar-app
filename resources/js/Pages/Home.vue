@@ -40,8 +40,8 @@ import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import TournamentCard from '@/Components/TournamentCard.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
-import Paragraph from '@/Components/Paragraph.vue';
-import MainHeading from '@/Components/MainHeading.vue';
+import Paragraph from '@/Components/Common/Paragraph.vue';
+import MainHeading from '@/Components/Common/MainHeading.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
 
 const tournaments = computed(() => usePage().props.tournaments ?? []);

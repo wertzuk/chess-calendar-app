@@ -8,7 +8,7 @@
 
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
-import SecondaryHeading from '@/Components/SecondaryHeading.vue';
+import SecondaryHeading from '@/Components/Common/SecondaryHeading.vue';
 import FormTournament from '@/Components/Form/FormTournament.vue';
 
 function submit(form) {
