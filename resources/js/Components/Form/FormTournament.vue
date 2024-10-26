@@ -121,13 +121,14 @@
 
         <div class="flex justify-between">
             <LinkButton class="mt-8" href="/">Zurück</LinkButton>
-            <PrimaryButton class="mt-8">Erstellen</PrimaryButton>
+            <PrimaryButton class="mt-8" v-if="isCreate">Erstellen</PrimaryButton>
+            <PrimaryButton class="mt-8" v-else>Speichern</PrimaryButton>
         </div>
     </form>
 </template>
 
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import FormInput from '@/Components/Form/FormInput.vue';
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
@@ -138,24 +139,31 @@ import FormRow from '@/Components/Form/FormRow.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
 import FormCollapseButton from '@/Components/Form/FormCollapseButton.vue';
 
+const { errors, tournament } = defineProps({
+    errors: Array,
+    tournament: { type: Object, required: false, default: () => ({}) },
+});
+
+const isCreate = computed(() => Object.keys(tournament).length === 0);
+
 const form = useForm({
-    title: null,
-    city: null,
-    chess_type: 'Klassisch',
-    start_date: null,
-    end_date: null,
-    time_control: null,
-    number_of_rounds: null,
-    street: null,
-    plz: null,
-    organizer: null,
-    elo_rated: 0,
-    dwz_rated: 0,
-    blitz_elo_rated: 0,
-    rapid_elo_rated: 0,
-    chess_results_link: null,
-    website_link: null,
-    announcement_link: null,
+    title: tournament.title,
+    city: tournament.city,
+    chess_type: tournament.chess_type ?? 'Klassisch',
+    start_date: tournament.start_date,
+    end_date: tournament.end_date,
+    time_control: tournament.time_control,
+    number_of_rounds: tournament.number_of_rounds,
+    street: tournament.street,
+    plz: tournament.plz,
+    organizer: tournament.organizer,
+    elo_rated: tournament.elo_rated,
+    dwz_rated: tournament.dwz_rated,
+    blitz_elo_rated: tournament.blitz_elo_rated,
+    rapid_elo_rated: tournament.rapid_elo_rated,
+    chess_results_link: tournament.chess_results_link,
+    website_link: tournament.website_link,
+    announcement_link: tournament.announcement_link,
 });
 
 const detailsActive = ref(false);
@@ -166,5 +174,4 @@ const emit = defineEmits(['submitForm']);
 const handleSubmit = () => {
     emit('submitForm', form);
 };
-let props = defineProps(['errors']);
 </script>
