@@ -33,7 +33,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { Datepicker } from 'flowbite';
 import FormLabel from './FormLabel.vue';
 
@@ -41,14 +41,21 @@ defineOptions({
     inheritAttrs: false,
 });
 const props = defineProps(['modelValue', 'fieldKey', 'error']);
+const datePicker = ref(null);
 
 onMounted(() => {
     const dateInput = document.getElementById(props.fieldKey);
     if (dateInput) {
-        new Datepicker(dateInput, {
+        datePicker.value = new Datepicker(dateInput, {
             autohide: true,
             format: 'yyyy-mm-dd',
         });
+    }
+});
+
+onBeforeUnmount(() => {
+    if (datePicker.value) {
+        datePicker.value.hide();
     }
 });
 defineEmits(['update:modelValue']);
