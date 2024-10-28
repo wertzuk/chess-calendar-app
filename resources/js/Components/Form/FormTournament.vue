@@ -120,7 +120,7 @@
         </div>
 
         <div class="flex justify-between">
-            <LinkButton class="mt-8" href="/">Zurück</LinkButton>
+            <LinkButton type="button" class="mt-8" href="/">Zurück</LinkButton>
             <PrimaryButton class="mt-8" v-if="isCreate">Erstellen</PrimaryButton>
             <PrimaryButton class="mt-8" v-else>Speichern</PrimaryButton>
         </div>
