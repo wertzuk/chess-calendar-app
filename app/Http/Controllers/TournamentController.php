@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreTournamentRequest;
+use App\Http\Requests\TournamentRequest;
 use App\Models\Tournament;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -30,13 +30,13 @@ class TournamentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTournamentRequest $request)
+    public function store(TournamentRequest $request)
     {
         $data = $request->validated();
         $data['user_id'] = auth()->id();
         Tournament::create($data);
 
-        return to_route('home');
+        return to_route('home');    
     }
 
     /**
@@ -52,15 +52,18 @@ class TournamentController extends Controller
      */
     public function edit(Tournament $tournament)
     {
-        //
+        return Inertia::render('Tournaments/Edit', [
+            'tournament' => $tournament,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tournament $tournament)
+    public function update(TournamentRequest $request, Tournament $tournament)
     {
-        //
+        $tournament->update($request->validated());
+        return to_route('home');    
     }
 
     /**
