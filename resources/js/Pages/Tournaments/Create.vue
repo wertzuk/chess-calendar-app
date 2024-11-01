@@ -10,9 +10,14 @@
 import MainLayout from '@/Layouts/MainLayout.vue';
 import SecondaryHeading from '@/Components/Common/SecondaryHeading.vue';
 import FormTournament from '@/Components/Form/FormTournament.vue';
+import { convertToISODate } from '@/helpers';
 
 function submit(form) {
-    form.post(route('tournaments.store'));
+    form.transform((data) => ({
+        ...data,
+        start_date: convertToISODate(data.start_date),
+        end_date: convertToISODate(data.end_date),
+    })).post(route('tournaments.store'));
 }
 
 let props = defineProps(['errors']);

@@ -11,10 +11,15 @@ import SecondaryHeading from '@/Components/Common/SecondaryHeading.vue';
 import FormTournament from '@/Components/Form/FormTournament.vue';
 import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
+import { convertToISODate } from '@/helpers';
 const tournament = computed(() => usePage().props.tournament);
 
 function submit(form) {
-    form.put(`/tournaments/${tournament.value.id}`);
+    form.transform((data) => ({
+        ...data,
+        start_date: convertToISODate(data.start_date),
+        end_date: convertToISODate(data.end_date),
+    })).put(`/tournaments/${tournament.value.id}`);
 }
 
 let props = defineProps(['errors']);

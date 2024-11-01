@@ -25,7 +25,7 @@
                 >Form</FormSelect
             >
         </FormRow>
-        <FormRow>
+        <FormRow id="date-range-picker">
             <FormDatePicker
                 v-model="form.start_date"
                 fieldKey="start_date"
@@ -130,6 +130,7 @@
 <script setup>
 import { ref, defineEmits, computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { convertToGermanDate } from '@/helpers';
 import FormInput from '@/Components/Form/FormInput.vue';
 import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import FormDatePicker from '@/Components/Form/FormDatePicker.vue';
@@ -150,8 +151,8 @@ const form = useForm({
     title: tournament.title,
     city: tournament.city,
     chess_type: tournament.chess_type ?? 'Klassisch',
-    start_date: tournament.start_date,
-    end_date: tournament.end_date,
+    start_date: convertToGermanDate(tournament?.start_date),
+    end_date: convertToGermanDate(tournament?.end_date),
     time_control: tournament.time_control,
     number_of_rounds: tournament.number_of_rounds,
     street: tournament.street,
