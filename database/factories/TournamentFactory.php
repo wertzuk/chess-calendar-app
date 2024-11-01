@@ -25,6 +25,7 @@ class TournamentFactory extends Factory
             'user_id' => User::factory(),
             'chess_type' => fake()->randomElement(['Blitz', 'Schnellschach', 'Klassisch']),
             'time_control' => fake()->numberBetween(1,100) . '+0',
+            'city' => fake()->city(),
             'start_date' => $date,
             'end_date' => $end,
         ];
