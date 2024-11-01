@@ -14,6 +14,7 @@ class TournamentController extends Controller
      */
     public function index()
     {
+        // Visible for everybody, no auth required
         return Inertia::render('Home', [
             'tournaments' => Tournament::all(),
         ]);
@@ -44,7 +45,7 @@ class TournamentController extends Controller
      */
     public function show(Tournament $tournament)
     {
-        //
+        // Visible for everybody, no auth required
     }
 
     /**
@@ -52,6 +53,10 @@ class TournamentController extends Controller
      */
     public function edit(Tournament $tournament)
     {
+        if (auth()->user()->cannot('update', $tournament)) {
+            abort(403);
+        }
+
         return Inertia::render('Tournaments/Edit', [
             'tournament' => $tournament,
         ]);
@@ -62,6 +67,10 @@ class TournamentController extends Controller
      */
     public function update(TournamentRequest $request, Tournament $tournament)
     {
+        if ($request->user()->cannot('update', $tournament)) {
+            abort(403);
+        }
+
         $tournament->update($request->validated());
         return to_route('home');    
     }
@@ -71,6 +80,11 @@ class TournamentController extends Controller
      */
     public function destroy(Tournament $tournament)
     {
-        //
+        if (auth()->user()->cannot('delete', $tournament)) {
+            abort(403);
+        }
+
+        $tournament->delete();
+        return to_route('home');    
     }
 }
