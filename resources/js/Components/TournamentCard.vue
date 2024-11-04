@@ -12,10 +12,9 @@
         <div class="flex gap-2 flex-grow-0 mt-auto">
             <Chip class="flex gap-1" isIconChip="true">
                 <IconLocation />
-                <span>{{ tournament.city ?? 'Berlin' }}</span>
+                <span>{{ tournament.city }}</span>
             </Chip>
             <Chip>{{ tournament.chess_type }}</Chip>
-            <!-- <Chip v-if="tournament.city">{{ tournament.city }}</Chip> -->
             <Chip v-if="tournament.elo_rated">ELO</Chip>
             <Chip v-if="tournament.dwz_rated">DWZ</Chip>
             <Chip v-if="tournament.rapid_elo_rated">Rapid-ELO</Chip>
@@ -24,29 +23,59 @@
         <div class="flex justify-between mt-8">
             <LinkButton>Mehr</LinkButton>
 
-            <div>
+            <div class="flex gap-2">
                 <LinkButton
-                    class="mr-4"
                     :href="route('tournaments.edit', { id: tournament.id })"
                     title="Bearbeiten"
                     ><IconEdit
                 /></LinkButton>
-                <LinkButton class="" title="Löschen"><IconDelete></IconDelete></LinkButton>
+                <form method="post" @submit.prevent="destroy">
+                    <PrimaryButton
+                        type="button"
+                        title="Löschen"
+                        @click="destroy"
+                        data-modal-target="popup-modal"
+                        data-modal-toggle="popup-modal"
+                        ><IconDelete></IconDelete
+                    ></PrimaryButton>
+                </form>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import Chip from '@/Components/Common/Chip.vue';
 import IconLocation from '@/Components/Icons/IconLocation.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
-import IconButton from '@/Components/Buttons/IconButton.vue';
 import IconEdit from '@/Components/Icons/IconEdit.vue';
 import IconDelete from '@/Components/Icons/IconDelete.vue';
+import PrimaryButton from './Buttons/PrimaryButton.vue';
+import { initFlowbite, Modal } from 'flowbite';
+import { useForm } from '@inertiajs/vue3';
 
 const props = defineProps(['tournament']);
+const modalActive = ref(false);
+const form = useForm({});
+
+function destroy() {
+    const submitBtn = document.getElementById('confirm');
+    console.log(submitBtn);
+    submitBtn.addEventListener('click', () => {
+        form.delete(route('tournaments.destroy', { id: props.tournament.id }));
+    });
+
+    // const modalEl = document.getElementById('popup-modal');
+    // const modal = new Modal(modalEl);
+    // console.log(modal);
+    // modal.show();
+    // TODO: show modal to confirm action
+}
+
+onMounted(() => {
+    initFlowbite();
+});
 
 const startDate = computed(() => {
     const date = new Date(props.tournament.start_date);

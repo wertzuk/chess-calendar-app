@@ -32,10 +32,11 @@
         </div>
         <div v-else><Paragraph>Keine Turniere gefunden!</Paragraph></div>
     </MainLayout>
+    <Confirm />
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import TournamentCard from '@/Components/TournamentCard.vue';
@@ -43,10 +44,15 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import Paragraph from '@/Components/Common/Paragraph.vue';
 import MainHeading from '@/Components/Common/MainHeading.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
+import Confirm from '@/Components/Common/Confirm.vue';
 
 const tournaments = computed(() => usePage().props.tournaments ?? []);
 groupTournaments(tournaments.value);
 const groupedTournaments = computed(() => groupTournaments(tournaments.value));
+
+onMounted(() => {
+    initFlowbite();
+});
 
 /**
  * Group tournaments by month
