@@ -19,8 +19,8 @@ class TournamentController extends Controller
         return Inertia::render('Home', [
             'tournaments' => Tournament::all()->map(function ($tournament) {
                 $tournament->can = [
-                    'edit_tournament' => Auth::user()?->can('update', $tournament),
-                    'delete_tournament' => Auth::user()?->can('delete', $tournament),
+                    'edit' => Auth::user()?->can('update', $tournament),
+                    'delete' => Auth::user()?->can('delete', $tournament),
                 ];
                 return $tournament;
             }),
@@ -53,6 +53,10 @@ class TournamentController extends Controller
     public function show(Tournament $tournament)
     {
         // Visible for everybody, no auth required
+        return Inertia::render('Tournaments/Show', [
+            'tournament' => $tournament,
+        ]);
+
     }
 
     /**
