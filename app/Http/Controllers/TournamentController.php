@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\TournamentRequest;
 use App\Models\Tournament;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TournamentController extends Controller
@@ -16,7 +17,13 @@ class TournamentController extends Controller
     {
         // Visible for everybody, no auth required
         return Inertia::render('Home', [
-            'tournaments' => Tournament::all(),
+            'tournaments' => Tournament::all()->map(function ($tournament) {
+                $tournament->can = [
+                    'edit_tournament' => Auth::user()?->can('update', $tournament),
+                    'delete_tournament' => Auth::user()?->can('delete', $tournament),
+                ];
+                return $tournament;
+            }),
         ]);
     }
 
@@ -53,7 +60,7 @@ class TournamentController extends Controller
      */
     public function edit(Tournament $tournament)
     {
-        if (auth()->user()->cannot('update', $tournament)) {
+        if (Auth::user()?->cannot('update', $tournament)) {
             abort(403);
         }
 
@@ -80,7 +87,7 @@ class TournamentController extends Controller
      */
     public function destroy(Tournament $tournament)
     {
-        if (auth()->user()->cannot('delete', $tournament)) {
+        if (Auth::user()?->cannot('delete', $tournament)) {
             abort(403);
         }
 

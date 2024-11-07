@@ -4,7 +4,11 @@
     <MainLayout>
         <MainHeading>Schachturnier-Kalender</MainHeading>
         <div class="mb-10">
-            <LinkButton :href="route('tournaments.create')" preserve-scroll as="button"
+            <LinkButton
+                :href="route('tournaments.create')"
+                preserve-scroll
+                as="button"
+                v-if="$page.props.auth.user"
                 >Turnier erstellen</LinkButton
             >
         </div>
