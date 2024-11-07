@@ -27,12 +27,14 @@
                 <LinkButton
                     :href="route('tournaments.edit', { id: tournament.id })"
                     title="Bearbeiten"
+                    v-if="tournament.can.edit"
                     ><IconEdit
                 /></LinkButton>
                 <form method="post" @submit.prevent="destroy">
                     <PrimaryButton
                         type="button"
                         title="Löschen"
+                        v-if="tournament.can.delete"
                         @click="destroy"
                         data-modal-target="popup-modal"
                         data-modal-toggle="popup-modal"
@@ -65,12 +67,6 @@ function destroy() {
     submitBtn.addEventListener('click', () => {
         form.delete(route('tournaments.destroy', { id: props.tournament.id }));
     });
-
-    // const modalEl = document.getElementById('popup-modal');
-    // const modal = new Modal(modalEl);
-    // console.log(modal);
-    // modal.show();
-    // TODO: show modal to confirm action
 }
 
 onMounted(() => {
