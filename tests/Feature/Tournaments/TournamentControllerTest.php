@@ -2,11 +2,11 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
-use App\Models\User;
 use App\Models\Tournament;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Inertia\Testing\AssertableInertia as Assert;
+use Tests\TestCase;
 
 class TournamentControllerTest extends TestCase
 {
@@ -37,17 +37,16 @@ class TournamentControllerTest extends TestCase
                     ->has('start_date')
                     ->has('end_date')
                     ->has('can.edit')
-                    ->has('can.delete') 
+                    ->has('can.delete')
                     ->etc()
                 )
-            )
-            ;
+            );
     }
 
     public function test_displays_tournaments_without_authentication()
     {
-        $amount = 3;
         // Arrange
+        $amount = 3;
         Tournament::factory()->count($amount)->create();
 
         // Act: Make the request without authentication
@@ -61,10 +60,71 @@ class TournamentControllerTest extends TestCase
                 ->has('tournaments.0', fn (Assert $page) => $page
                     ->has('id')
                     ->has('title')
-                    ->where('can.edit', false) 
+                    ->where('can.edit', false)
                     ->where('can.delete', false)
                     ->etc()
                 )
             );
+    }
+
+    public function test_users_can_only_update_and_delete_their_own_tournaments()
+    {
+        // Arrange
+        $users = User::factory()->count(3)->create();
+        Tournament::factory()->create(['user_id' => 1]);
+        Tournament::factory()->create(['user_id' => 1]);
+        Tournament::factory()->create(['user_id' => 2]);
+        Tournament::factory()->create(['user_id' => 3]);
+
+        // Act: Make the request as the first created user
+        $response = $this->actingAs($users[0])->get(uri: route('home'));
+
+        // Assert
+        $response->assertStatus(200)
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Home')
+                ->has('tournaments', 4)  // Check that we received 4 tournaments
+                ->has('tournaments.0', fn (Assert $page) => $page
+                    ->where('can.edit', true)
+                    ->where('can.delete', true)
+                    ->etc()
+                )
+                ->has('tournaments.1', fn (Assert $page) => $page
+                    ->where('can.edit', true)
+                    ->where('can.delete', true)
+                    ->etc()
+                )
+                // For a tournament that was created by a different user, edit and delete should not be possible
+                ->has('tournaments.2', fn (Assert $page) => $page
+                    ->where('can.edit', false)
+                    ->where('can.delete', false)
+                    ->etc()
+                )
+            );
+    }
+
+    public function test_guest_users_can_only_read_tournaments()
+    {
+        // Arrange
+        $amount = 3;
+        Tournament::factory()->count($amount)->create();
+
+        // Act: Request the route as guest user
+        $response = $this->get(uri: route('home'));
+
+        // Assert
+        $response->assertStatus(200)
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Home')
+                ->has('tournaments', $amount)  // Check that we received 3 tournaments
+                ->has('tournaments', fn (Assert $page) => $page->each(fn (Assert $tournament) => $tournament
+                    ->has('id')
+                    ->where('can.edit', false)
+                    ->where('can.delete', false)
+                    ->etc()
+                )
+                )
+            );
+
     }
 }
