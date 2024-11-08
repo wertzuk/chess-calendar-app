@@ -4,21 +4,20 @@ namespace App\Policies;
 
 use App\Models\Tournament;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class TournamentPolicy
 {
     /**
      * Perform pre-authorization checks.
      */
-    public function before(User $user, string $ability): bool|null
+    public function before(User $user, string $ability): ?bool
     {
-    if ($user->is_admin) {
-        return true;
+        if ($user->is_admin) {
+            return true;
+        }
+
+        return null;
     }
- 
-    return null;
-}
 
     /**
      * Determine whether the user can update the model.

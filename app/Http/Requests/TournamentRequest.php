@@ -26,7 +26,7 @@ class TournamentRequest extends FormRequest
             'time_control' => 'required|max:100',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'chess_type' => 'required', 
+            'chess_type' => 'required',
             'city' => 'required|max:50',
             'number_of_rounds' => 'nullable|integer',
             'street' => 'nullable|max:50',

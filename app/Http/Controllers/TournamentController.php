@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TournamentRequest;
 use App\Models\Tournament;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -22,6 +21,7 @@ class TournamentController extends Controller
                     'edit' => Auth::user()?->can('update', $tournament) ?? false,
                     'delete' => Auth::user()?->can('delete', $tournament) ?? false,
                 ];
+
                 return $tournament;
             }),
         ]);
@@ -44,7 +44,7 @@ class TournamentController extends Controller
         $data['user_id'] = auth()->id();
         Tournament::create($data);
 
-        return to_route('home');    
+        return to_route('home');
     }
 
     /**
@@ -83,7 +83,8 @@ class TournamentController extends Controller
         }
 
         $tournament->update($request->validated());
-        return to_route('home');    
+
+        return to_route('home');
     }
 
     /**
@@ -96,6 +97,7 @@ class TournamentController extends Controller
         }
 
         $tournament->delete();
-        return to_route('home');    
+
+        return to_route('home');
     }
 }
