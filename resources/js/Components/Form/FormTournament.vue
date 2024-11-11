@@ -40,15 +40,15 @@
                 >Enddatum</FormDatePicker
             >
         </FormRow>
+        <FormInput
+            v-model="form.time_control"
+            fieldKey="time_control"
+            required
+            :error="form.errors.time_control"
+            maxlength="100"
+            >Zeitkontrolle</FormInput
+        >
         <FormRow class="mb-10">
-            <FormInput
-                v-model="form.time_control"
-                fieldKey="time_control"
-                required
-                :error="form.errors.time_control"
-                maxlength="100"
-                >Zeitkontrolle</FormInput
-            >
             <FormInput
                 v-model="form.number_of_rounds"
                 fieldKey="number_of_rounds"
