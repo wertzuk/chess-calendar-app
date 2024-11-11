@@ -5,10 +5,11 @@
         <h5 class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
             {{ tournament.title }}
         </h5>
-        <p class="mb-6 font-normal text-sm text-gray-700 dark:text-gray-400">
-            <span>{{ startDate }}</span>
-            <span v-if="endDate && endDate !== startDate"> - {{ endDate }}</span>
-        </p>
+        <DateRange
+            :start="tournament.start_date"
+            :end="tournament.end_date"
+            class="text-sm"
+        ></DateRange>
         <div class="flex gap-2 flex-grow-0 mt-auto">
             <Chip class="flex gap-1" isIconChip="true">
                 <IconLocation />
@@ -21,7 +22,7 @@
             <Chip v-if="tournament.blitz_elo_rated">Blitz-ELO</Chip>
         </div>
         <div class="flex justify-between mt-8">
-            <LinkButton>Mehr</LinkButton>
+            <LinkButton :href="route('tournament.show', { id: tournament.id })">Mehr</LinkButton>
 
             <div class="flex gap-2">
                 <LinkButton
@@ -46,24 +47,23 @@
     </div>
 </template>
 
-<script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+<script setup>
+import { onMounted } from 'vue';
 import Chip from '@/Components/Common/Chip.vue';
 import IconLocation from '@/Components/Icons/IconLocation.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
 import IconEdit from '@/Components/Icons/IconEdit.vue';
 import IconDelete from '@/Components/Icons/IconDelete.vue';
 import PrimaryButton from './Buttons/PrimaryButton.vue';
-import { initFlowbite, Modal } from 'flowbite';
+import { initFlowbite } from 'flowbite';
 import { useForm } from '@inertiajs/vue3';
+import DateRange from './Common/DateRange.vue';
 
 const props = defineProps(['tournament']);
-const modalActive = ref(false);
 const form = useForm({});
 
 function destroy() {
     const submitBtn = document.getElementById('confirm');
-    console.log(submitBtn);
     submitBtn.addEventListener('click', () => {
         form.delete(route('tournaments.destroy', { id: props.tournament.id }));
     });
@@ -72,33 +72,4 @@ function destroy() {
 onMounted(() => {
     initFlowbite();
 });
-
-const startDate = computed(() => {
-    const date = new Date(props.tournament.start_date);
-    return convertDateFormatToDDMMYYYY(date);
-});
-
-const endDate = computed(() => {
-    const date = new Date(props.tournament.end_date);
-    return convertDateFormatToDDMMYYYY(date);
-});
-
-function convertDateFormatToDDMMYYYY(date) {
-    if (!date || isNaN(date)) {
-        return null;
-    }
-
-    return `${addLeadingZero(date.getDate())}.${addLeadingZero(
-        date.getMonth() + 1
-    )}.${date.getFullYear()}`;
-}
-
-/**
- * Add leading zero to a number if it has exactly one digit (used to properly display dates)
- *
- * @param {number} n
- */
-function addLeadingZero(n) {
-    return n < 10 ? '0' + n : n;
-}
 </script>
