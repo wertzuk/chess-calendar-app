@@ -36,7 +36,7 @@
         </div>
         <div v-else><Paragraph>Keine Turniere gefunden!</Paragraph></div>
     </MainLayout>
-    <Confirm />
+    <Confirm v-if="$page.props.auth.user" />
 </template>
 
 <script setup>
