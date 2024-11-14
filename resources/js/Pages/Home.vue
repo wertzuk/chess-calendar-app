@@ -8,7 +8,7 @@
                 :href="route('tournaments.create')"
                 preserve-scroll
                 as="button"
-                v-if="$page.props.auth.user"
+                v-if="isLoggedIn"
                 >Turnier erstellen</LinkButton
             >
         </div>
@@ -36,7 +36,7 @@
         </div>
         <div v-else><Paragraph>Keine Turniere gefunden!</Paragraph></div>
     </MainLayout>
-    <Confirm v-if="$page.props.auth.user" />
+    <Confirm v-if="isLoggedIn" />
 </template>
 
 <script setup>
@@ -53,6 +53,7 @@ import Confirm from '@/Components/Common/Confirm.vue';
 const tournaments = computed(() => usePage().props.tournaments ?? []);
 groupTournaments(tournaments.value);
 const groupedTournaments = computed(() => groupTournaments(tournaments.value));
+const isLoggedIn = computed(() => !!usePage().props.auth.user);
 
 onMounted(() => {
     initFlowbite();
