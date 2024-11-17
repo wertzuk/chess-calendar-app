@@ -41,11 +41,38 @@ jobs:
         run: |
           npm run build
 
-      - name: Push
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: main # The branch name where you want to push the assets
-          FOLDER: main # The directory where your assets are generated
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
-          MESSAGE: 'Build: ({sha}) {msg}' # The commit message
+      # Step 7: Deploy to Hostinger via SSH
+      - name: Deploy to Hostinger
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 195.35.49.160
+          username: u925892062
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 65002
+          script: |
+            cd /home/u925892062/public_html
+
+            # Initialize Git repo if not already initialized
+            if [ ! -d ".git" ]; then
+              git init
+              git remote add origin git@github.com:wertzuk/chess-calendar-app.git
+            fi
+
+            git pull origin main
+
+            # Install Composer dependencies
+            composer install --no-dev --optimize-autoloader
+
+            # Run database migrations and seeding
+            php artisan migrate --seed
+
+            # Cache config, routes, and views
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            # Optimize Laravel application
+            php artisan optimize
+
+            # Optional: Clear cache (if necessary)
+            php artisan cache:clear
