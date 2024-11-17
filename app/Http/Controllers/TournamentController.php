@@ -44,7 +44,7 @@ class TournamentController extends Controller
         $data['user_id'] = auth()->id();
         Tournament::create($data);
 
-        return to_route('home');
+        return to_route('home')->with( 'success', 'Erfolgreich erstellt!');
     }
 
     /**
@@ -84,7 +84,8 @@ class TournamentController extends Controller
 
         $tournament->update($request->validated());
 
-        return to_route('home');
+        return to_route('home')->with( 'success', 'Erfolgreich bearbeitet!');
+
     }
 
     /**
@@ -98,6 +99,6 @@ class TournamentController extends Controller
 
         $tournament->delete();
 
-        return to_route('home');
+        return to_route('home')->with( 'success', 'Turnier gelöscht!');
     }
 }
