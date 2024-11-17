@@ -27,14 +27,11 @@
             <div class="flex gap-2">
                 <EditButton
                     :href="route('tournaments.edit', { id: tournament.id })"
-                    title="Bearbeiten"
                     v-if="tournament.can.edit"
                     >Edit</EditButton
                 >
                 <form method="post" @submit.prevent="destroy">
                     <DeleteButton
-                        type="button"
-                        title="Löschen"
                         v-if="tournament.can.delete"
                         @click="destroy"
                         data-modal-target="popup-modal"
