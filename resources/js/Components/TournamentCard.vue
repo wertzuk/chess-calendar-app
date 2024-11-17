@@ -25,14 +25,14 @@
             <LinkButton :href="route('tournament.show', { id: tournament.id })">Mehr</LinkButton>
 
             <div class="flex gap-2">
-                <LinkButton
+                <EditButton
                     :href="route('tournaments.edit', { id: tournament.id })"
                     title="Bearbeiten"
                     v-if="tournament.can.edit"
-                    ><IconEdit
-                /></LinkButton>
+                    >Edit</EditButton
+                >
                 <form method="post" @submit.prevent="destroy">
-                    <PrimaryButton
+                    <DeleteButton
                         type="button"
                         title="Löschen"
                         v-if="tournament.can.delete"
@@ -40,7 +40,7 @@
                         data-modal-target="popup-modal"
                         data-modal-toggle="popup-modal"
                         ><IconDelete></IconDelete
-                    ></PrimaryButton>
+                    ></DeleteButton>
                 </form>
             </div>
         </div>
@@ -58,6 +58,8 @@ import PrimaryButton from './Buttons/PrimaryButton.vue';
 import { initFlowbite } from 'flowbite';
 import { useForm } from '@inertiajs/vue3';
 import DateRange from './Common/DateRange.vue';
+import EditButton from './Buttons/EditButton.vue';
+import DeleteButton from './Buttons/DeleteButton.vue';
 
 const props = defineProps(['tournament']);
 const form = useForm({});
