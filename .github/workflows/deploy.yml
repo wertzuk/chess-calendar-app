@@ -1,0 +1,58 @@
+name: Deploy App
+
+on:
+  push:
+    branches:
+      - main # Trigger deploy on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the latest code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js to install frontend dependencies (Inertia.js, Vue.js, etc.)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      # Step 3: Install Node.js dependencies (front-end assets)
+      - name: Install Node.js dependencies
+        run: |
+          npm install
+
+      # Step 4: Build assets for production (minify JS/CSS)
+      - name: Build assets for production
+        run: |
+          npm run build
+
+      # Step 5: Deploy to Hostinger via SSH
+      - name: Deploy to Hostinger
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 195.35.49.160
+          username: u925892062
+          key: ${{ secrets.HOSTINGER_SSH_KEY }}
+          port: 22
+          script: |
+            cd /home/u925892062/public_html
+            git pull origin main
+
+            # Step 6: Install Composer dependencies on the server (backend)
+            composer install --no-dev --optimize-autoloader
+
+            # Step 7: Run database migrations and seeding
+            php artisan migrate --seed
+
+            # Step 8: Cache config, routes, and views
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
+
+            # Step 9: Optimize Laravel application
+            php artisan optimize
+            php artisan cache:clear
