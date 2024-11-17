@@ -35,6 +35,12 @@
             </div>
         </div>
         <div v-else><Paragraph>Keine Turniere gefunden!</Paragraph></div>
+        <div v-if="success">
+            <ToastSuccess>{{ success }}</ToastSuccess>
+        </div>
+        <div v-if="error">
+            <ToastError>{{ error }}</ToastError>
+        </div>
     </MainLayout>
     <Confirm v-if="isLoggedIn" />
 </template>
@@ -49,11 +55,13 @@ import Paragraph from '@/Components/Common/Paragraph.vue';
 import MainHeading from '@/Components/Common/MainHeading.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
 import Confirm from '@/Components/Common/Confirm.vue';
+import ToastSuccess from '@/Components/Toast/ToastSuccess.vue';
+import ToastError from '@/Components/Toast/ToastError.vue';
 
 const tournaments = computed(() => usePage().props.tournaments ?? []);
-groupTournaments(tournaments.value);
 const groupedTournaments = computed(() => groupTournaments(tournaments.value));
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
+const { error, success } = usePage().props.flash;
 
 onMounted(() => {
     initFlowbite();
