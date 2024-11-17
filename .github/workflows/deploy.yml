@@ -48,7 +48,7 @@ jobs:
           host: 195.35.49.160
           username: u925892062
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
-          port: 22
+          port: 65002
           script: |
             cd /home/u925892062/public_html
             git pull origin main
