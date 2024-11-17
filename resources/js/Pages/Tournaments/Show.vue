@@ -14,7 +14,9 @@
                         <span class="text-lg">{{ tournament.city }}</span>
                     </ListItem>
                     <ListItem v-if="tournament.time_control"
-                        ><IconClock /><span>{{ tournament.time_control }}</span></ListItem
+                        ><IconClock /><span
+                            >{{ tournament.time_control }} ({{ tournament.chess_type }})</span
+                        ></ListItem
                     >
                     <ListItem v-if="tournament.number_of_rounds"
                         ><IconNumber /><span
@@ -34,8 +36,8 @@
                         ><IconCheckmark /><span>Blitz-ELO-Auswertung</span></ListItem
                     >
                 </ul>
+                <LinkButton class="mt-12" href="/">Zurück</LinkButton>
             </div>
-            <LinkButton class="mt-12" href="/">Zurück</LinkButton>
 
             <!-- <pre class="text-white text-left">
                 {{ tournament }}
