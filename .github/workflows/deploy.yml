@@ -14,23 +14,34 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Set up Node.js to install frontend dependencies (Inertia.js, Vue.js, etc.)
+      # Step 2: Set up PHP
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      # Step 3: Install Composer dependencies
+      - name: Install Composer dependencies
+        run: |
+          composer install --no-dev --optimize-autoloader
+
+      # Step 4: Set up Node.js for building frontend assets
       - name: Set up Node.js
         uses: actions/setup-node@v4.1.0
         with:
           node-version: '20'
 
-      # Step 3: Install Node.js dependencies (front-end assets)
+      # Step 5: Install Node.js dependencies (Inertia.js, Vue.js, etc.)
       - name: Install Node.js dependencies
         run: |
           npm install
 
-      # Step 4: Build assets for production (minify JS/CSS)
+      # Step 6: Build frontend assets for production
       - name: Build assets for production
         run: |
-          npm run build
+          npm run prod  # Or 'npm run build' if you're using Vite
 
-      # Step 5: Deploy to Hostinger via SSH
+      # Step 7: Deploy to Hostinger via SSH
       - name: Deploy to Hostinger
         uses: appleboy/ssh-action@v1.2.0
         with:
@@ -42,17 +53,19 @@ jobs:
             cd /home/u925892062/public_html
             git pull origin main
 
-            # Step 6: Install Composer dependencies on the server (backend)
-            composer install --no-dev --optimize-autoloader
+            # Copy vendor folder file from CI/CD runner to server
+            rsync -avz --delete ./vendor/ /home/u925892062/public_html/vendor/
 
-            # Step 7: Run database migrations and seeding
+            # Run database migrations and seeding
             php artisan migrate --seed
 
-            # Step 8: Cache config, routes, and views
+            # Cache config, routes, and views
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
 
-            # Step 9: Optimize Laravel application
+            # Optimize Laravel application
             php artisan optimize
+
+            # Optional: Clear cache (if necessary)
             php artisan cache:clear
