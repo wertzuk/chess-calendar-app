@@ -39,7 +39,7 @@ jobs:
       # Step 6: Build frontend assets for production
       - name: Build assets for production
         run: |
-          npm run prod  # Or 'npm run build' if you're using Vite
+          npm run build
 
       # Step 7: Deploy to Hostinger via SSH
       - name: Deploy to Hostinger
