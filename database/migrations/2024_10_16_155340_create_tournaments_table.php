@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('organizer')->nullable();
             $table->string('street')->nullable();
             $table->integer('plz')->nullable();
-            $table->integer('city')->nullable();
+            $table->string('city')->nullable();
             $table->integer('number_of_rounds')->nullable();
             $table->boolean('elo_rated')->default(0);
             $table->boolean('blitz_elo_rated')->default(0);
