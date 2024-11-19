@@ -3,76 +3,70 @@ name: Deploy App
 on:
   push:
     branches:
-      - main # Trigger deploy on push to the main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout the latest code
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Step 2: Set up PHP
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
+      - name: Set Up PHP
+        uses: shivammathur/setup-php@v2.30.0
         with:
           php-version: '8.2'
+          extensions: mbstring, bcmath, intl
+          tools: composer
 
-      # Step 3: Install Composer dependencies
-      - name: Install Composer dependencies
-        run: |
-          composer install --no-dev --optimize-autoloader
+      - name: Install Dependencies
+        run: composer install --no-dev --optimize-autoloader
 
-      # Step 4: Set up Node.js for building frontend assets
-      - name: Set up Node.js
-        uses: actions/setup-node@v4.1.0
+      - name: Install Node.js and Build Frontend
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      # Step 5: Install Node.js dependencies (Inertia.js, Vue.js, etc.)
-      - name: Install Node.js dependencies
-        run: |
-          npm install
-
-      # Step 6: Build frontend assets for production
-      - name: Build assets for production
-        run: |
+      - run: |
+          npm ci
           npm run build
 
-      # Step 7: Deploy to Hostinger via SSH
+      # Deploy to Hostinger
       - name: Deploy to Hostinger
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+          SSH_USER: ${{secrets.SSH_USER}}
+          DEPLOY_DIR: ${{secrets.DEPLOY_DIR}}
+        run: |
+
+          # Start the SSH agent
+          eval "$(ssh-agent -s)"
+
+          # Add the SSH private key
+          echo "${{ secrets.HOSTINGER_SSH_KEY }}" | tr -d '\r' | ssh-add -
+
+          rsync -azP --delete \
+            --exclude=".env" \
+            --exclude="storage/" \
+            --exclude="node_modules/" \
+            --exclude=".git/" \
+            ./ $SSH_USER@$SSH_HOST:$REMOTE_DIR
+
+      - name: SSH to Hostinger
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: 195.35.49.160
-          username: u925892062
+          host: ${{secrets.SSH_HOST}}
+          username: ${{secrets.SSH_USER}}
           key: ${{ secrets.HOSTINGER_SSH_KEY }}
           port: 65002
           script: |
-            cd /home/u925892062/public_html
+            cd ${{secrets.DEPLOY_DIR}}
+            echo "Run database migrations and seeding"
+            php artisan migrate --force
 
-            # Initialize Git repo if not already initialized
-            if [ ! -d ".git" ]; then
-              git init
-              git remote add origin git@github.com:wertzuk/chess-calendar-app.git
-            fi
-
-            git pull origin main
-
-            # Install Composer dependencies
-            composer install --no-dev --optimize-autoloader
-
-            # Run database migrations and seeding
-            php artisan migrate --seed
-
-            # Cache config, routes, and views
+            echo "Cache config, routes and views"
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
 
-            # Optimize Laravel application
-            php artisan optimize
-
-            # Optional: Clear cache (if necessary)
-            php artisan cache:clear
+            echo "Deployment complete"
