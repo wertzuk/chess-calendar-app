@@ -74,4 +74,3 @@ jobs:
             php artisan view:cache
 
             echo "Deployment complete"
-            EOF
