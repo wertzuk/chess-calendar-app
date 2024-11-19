@@ -50,6 +50,7 @@ jobs:
             --exclude="storage/" \
             --exclude="node_modules/" \
             --exclude=".git/" \
+            -e "ssh -p 65002" \
             ./ $SSH_USER@$SSH_HOST:$REMOTE_DIR
 
       - name: SSH to Hostinger
