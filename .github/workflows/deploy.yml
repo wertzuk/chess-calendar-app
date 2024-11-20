@@ -46,11 +46,7 @@ jobs:
           echo "${{ secrets.HOSTINGER_SSH_KEY }}" | tr -d '\r' | ssh-add -
 
           rsync -azP --delete \
-            --exclude=".env" \
-            --exclude=".htaccess" \
-            --exclude="storage/" \
-            --exclude="node_modules/" \
-            --exclude=".git/" \
+             --exclude-from="./rsync-excludes.txt" \
             -e "ssh -p 65002 -o StrictHostKeyChecking=no" \
             ./ $SSH_USER@$SSH_HOST:$DEPLOY_DIR
 
