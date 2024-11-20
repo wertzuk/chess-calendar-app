@@ -1,4 +1,6 @@
 <template>
+    <Head title="Turnier erstellen" />
+
     <MainLayout>
         <SecondaryHeading class="text-center mb-6">Turnier erstellen</SecondaryHeading>
 

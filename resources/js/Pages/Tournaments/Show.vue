@@ -1,4 +1,6 @@
 <template>
+    <Head :title="tournament.title" />
+
     <MainLayout>
         <div>
             <SecondaryHeading class="text-center mb-6">{{ tournament.title }}</SecondaryHeading>
@@ -56,6 +58,7 @@ import IconLocation from '@/Components/Icons/IconLocation.vue';
 import IconCheckmark from '@/Components/Icons/IconCheckmark.vue';
 import IconClock from '@/Components/Icons/IconClock.vue';
 import IconNumber from '@/Components/Icons/IconNumber.vue';
+import { Head } from '@inertiajs/vue3';
 
 const { tournament } = defineProps({ tournament: Object });
 </script>
