@@ -47,6 +47,7 @@ jobs:
 
           rsync -azP --delete \
             --exclude=".env" \
+            --exclude=".htaccess" \
             --exclude="storage/" \
             --exclude="node_modules/" \
             --exclude=".git/" \
