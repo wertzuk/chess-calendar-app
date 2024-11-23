@@ -13,6 +13,7 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import SecondaryHeading from '@/Components/Common/SecondaryHeading.vue';
 import FormTournament from '@/Components/Form/FormTournament.vue';
 import { convertToISODate } from '@/helpers';
+import { Head } from '@inertiajs/vue3';
 
 function submit(form) {
     form.transform((data) => ({
