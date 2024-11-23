@@ -10,7 +10,7 @@
             :end="tournament.end_date"
             class="text-sm"
         ></DateRange>
-        <div class="flex gap-2 flex-grow-0 mt-auto">
+        <div class="flex flex-wrap gap-2 flex-grow-0 mt-auto">
             <Chip class="flex gap-1" isIconChip="true">
                 <IconLocation />
                 <span>{{ tournament.city }}</span>
