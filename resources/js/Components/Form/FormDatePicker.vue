@@ -7,7 +7,6 @@
             </div>
             <input
                 :value="modelValue"
-                :name="fieldKey"
                 :id="fieldKey"
                 @changeDate="$emit('update:modelValue', $event.target.value)"
                 type="text"
@@ -23,8 +22,6 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue';
-import { Datepicker } from 'flowbite';
 import FormLabel from './FormLabel.vue';
 import IconCalendar from '../Icons/IconCalendar.vue';
 
@@ -32,26 +29,6 @@ defineOptions({
     inheritAttrs: false,
 });
 const props = defineProps(['modelValue', 'fieldKey', 'error']);
-const datePicker = ref(null);
 
-onMounted(() => {
-    const dateInput = document.getElementById(props.fieldKey);
-
-    const options = {
-        autohide: true,
-        format: 'dd.mm.yyyy',
-        rangePicker: false,
-    };
-
-    if (dateInput) {
-        datePicker.value = new Datepicker(dateInput, options);
-    }
-});
-
-onBeforeUnmount(() => {
-    if (datePicker.value) {
-        datePicker.value.hide();
-    }
-});
 defineEmits(['update:modelValue']);
 </script>

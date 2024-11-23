@@ -128,7 +128,8 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, computed } from 'vue';
+import { ref, defineEmits, computed, onMounted } from 'vue';
+import { DateRangePicker } from 'flowbite-datepicker';
 import { useForm } from '@inertiajs/vue3';
 import { convertToGermanDate } from '@/helpers';
 import FormInput from '@/Components/Form/FormInput.vue';
@@ -165,6 +166,19 @@ const form = useForm({
     chess_results_link: tournament.chess_results_link,
     website_link: tournament.website_link,
     announcement_link: tournament.announcement_link,
+});
+
+onMounted(() => {
+    const dateInput = document.getElementById('date-range-picker');
+
+    const options = {
+        autohide: true,
+        format: 'dd.mm.yyyy',
+    };
+
+    if (dateInput) {
+        new DateRangePicker(dateInput, options);
+    }
 });
 
 const detailsActive = ref(false);
