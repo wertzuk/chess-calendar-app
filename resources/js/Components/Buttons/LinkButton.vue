@@ -7,6 +7,5 @@
 </template>
 
 <script setup>
-import BaseButton from './BaseButton.vue';
 import { Link } from '@inertiajs/vue3';
 </script>
