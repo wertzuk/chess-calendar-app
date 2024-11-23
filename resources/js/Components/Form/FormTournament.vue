@@ -45,7 +45,7 @@
             fieldKey="time_control"
             required
             :error="form.errors.time_control"
-            maxlength="100"
+            maxlength="200"
             >Zeitkontrolle</FormInput
         >
         <FormRow class="mb-10">

@@ -23,7 +23,7 @@ class TournamentRequest extends FormRequest
     {
         return [
             'title' => 'required|max:100',
-            'time_control' => 'required|max:100',
+            'time_control' => 'required|max:200',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'chess_type' => 'required',
