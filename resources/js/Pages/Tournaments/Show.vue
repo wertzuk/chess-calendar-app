@@ -2,48 +2,55 @@
     <Head :title="tournament.title" />
 
     <MainLayout>
-        <div>
-            <SecondaryHeading class="text-center mb-6">{{ tournament.title }}</SecondaryHeading>
-            <DateRange
-                :start="tournament.start_date"
-                :end="tournament.end_date"
-                class="text-lg text-center"
-            />
-            <div class="max-w-2xl mx-auto">
-                <ul class="space-y-4 text-left text-gray-500 dark:text-gray-400 mx-auto">
-                    <ListItem>
-                        <IconLocation />
-                        <span class="text-lg">{{ tournament.city }}</span>
-                    </ListItem>
-                    <ListItem v-if="tournament.time_control"
-                        ><IconClock /><span
-                            >{{ tournament.time_control }} ({{ tournament.chess_type }})</span
-                        ></ListItem
+        <SecondaryHeading class="text-center mb-6">{{ tournament.title }}</SecondaryHeading>
+        <DateRange
+            :start="tournament.start_date"
+            :end="tournament.end_date"
+            class="text-lg text-center"
+        />
+        <div class="max-w-2xl mx-auto">
+            <ul class="py-12 space-y-4 text-left text-gray-500 dark:text-gray-400 mx-auto">
+                <ListItem>
+                    <IconLocation />
+                    <span class="text-lg">{{ tournament.city }}</span>
+                </ListItem>
+                <ListItem v-if="tournament.time_control"
+                    ><IconClock /><span
+                        >{{ tournament.time_control }} ({{ tournament.chess_type }})</span
+                    ></ListItem
+                >
+                <ListItem v-if="tournament.number_of_rounds"
+                    ><IconNumber /><span>{{ tournament.number_of_rounds }} Runden</span></ListItem
+                >
+                <ListItem v-if="tournament.elo_rated"
+                    ><IconCheckmark /><span>ELO-Auswertung</span></ListItem
+                >
+                <ListItem v-if="tournament.dwz_rated"
+                    ><IconCheckmark /><span>DWZ-Auswertung</span></ListItem
+                >
+                <ListItem v-if="tournament.rapid_elo_rated"
+                    ><IconCheckmark /><span>Rapid-ELO-Auswertung</span></ListItem
+                >
+                <ListItem v-if="tournament.blitz_elo_rated"
+                    ><IconCheckmark /><span>Blitz-ELO-Auswertung</span></ListItem
+                >
+                <ListItem v-if="tournament.chess_results_link">
+                    <ExternalLinkButton :href="tournament.chess_results_link"
+                        >Chess-Results Link</ExternalLinkButton
                     >
-                    <ListItem v-if="tournament.number_of_rounds"
-                        ><IconNumber /><span
-                            >{{ tournament.number_of_rounds }} Runden</span
-                        ></ListItem
+                </ListItem>
+                <ListItem v-if="tournament.website_link">
+                    <ExternalLinkButton :href="tournament.website_link"
+                        >Link zur Webseite</ExternalLinkButton
                     >
-                    <ListItem v-if="tournament.elo_rated"
-                        ><IconCheckmark /><span>ELO-Auswertung</span></ListItem
+                </ListItem>
+                <ListItem v-if="tournament.announcement_link">
+                    <ExternalLinkButton :href="tournament.announcement_link"
+                        >Link zur Ausschreibung</ExternalLinkButton
                     >
-                    <ListItem v-if="tournament.dwz_rated"
-                        ><IconCheckmark /><span>DWZ-Auswertung</span></ListItem
-                    >
-                    <ListItem v-if="tournament.rapid_elo_rated"
-                        ><IconCheckmark /><span>Rapid-ELO-Auswertung</span></ListItem
-                    >
-                    <ListItem v-if="tournament.blitz_elo_rated"
-                        ><IconCheckmark /><span>Blitz-ELO-Auswertung</span></ListItem
-                    >
-                </ul>
-                <LinkButton class="mt-12" href="/">Zurück</LinkButton>
-            </div>
-
-            <!-- <pre class="text-white text-left">
-                {{ tournament }}
-            </pre> -->
+                </ListItem>
+            </ul>
+            <LinkButton class="mt-16" href="/">Zurück</LinkButton>
         </div>
     </MainLayout>
 </template>
@@ -59,6 +66,7 @@ import IconCheckmark from '@/Components/Icons/IconCheckmark.vue';
 import IconClock from '@/Components/Icons/IconClock.vue';
 import IconNumber from '@/Components/Icons/IconNumber.vue';
 import { Head } from '@inertiajs/vue3';
+import ExternalLinkButton from '@/Components/Buttons/ExternalLinkButton.vue';
 
 const { tournament } = defineProps({ tournament: Object });
 </script>
