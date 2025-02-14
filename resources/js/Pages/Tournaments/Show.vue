@@ -2,71 +2,98 @@
     <Head :title="tournament.title" />
 
     <MainLayout>
-        <SecondaryHeading class="text-center mb-6">{{ tournament.title }}</SecondaryHeading>
-        <DateRange
-            :start="tournament.start_date"
-            :end="tournament.end_date"
-            class="text-lg text-center"
-        />
         <div class="max-w-2xl mx-auto">
-            <ul class="py-12 space-y-4 text-left text-gray-500 dark:text-gray-400 mx-auto">
-                <ListItem>
-                    <IconLocation />
-                    <span class="text-lg">{{ tournament.city }}</span>
-                </ListItem>
-                <ListItem v-if="tournament.time_control"
-                    ><IconClock /><span
-                        >{{ tournament.time_control }} ({{ tournament.chess_type }})</span
-                    ></ListItem
-                >
-                <ListItem v-if="tournament.number_of_rounds"
-                    ><IconNumber /><span>{{ tournament.number_of_rounds }} Runden</span></ListItem
-                >
-                <ListItem v-if="tournament.elo_rated"
-                    ><IconCheckmark /><span>ELO-Auswertung</span></ListItem
-                >
-                <ListItem v-if="tournament.dwz_rated"
-                    ><IconCheckmark /><span>DWZ-Auswertung</span></ListItem
-                >
-                <ListItem v-if="tournament.rapid_elo_rated"
-                    ><IconCheckmark /><span>Rapid-ELO-Auswertung</span></ListItem
-                >
-                <ListItem v-if="tournament.blitz_elo_rated"
-                    ><IconCheckmark /><span>Blitz-ELO-Auswertung</span></ListItem
-                >
-                <ListItem v-if="tournament.chess_results_link">
-                    <ExternalLinkButton :href="tournament.chess_results_link"
-                        >Chess-Results Link</ExternalLinkButton
+            <SecondaryHeading class="mb-12">{{ tournament.title }}</SecondaryHeading>
+
+            <dl class="divide-y divide-gray-100 dark:divide-gray-700">
+                <DescriptionListItem>
+                    <template #label>Datum</template>
+                    <template #value
+                        ><DateRange :start="tournament.start_date" :end="tournament.end_date"
+                    /></template>
+                </DescriptionListItem>
+                <DescriptionListItem>
+                    <template #label>Zeitkontrolle</template>
+                    <template #value
+                        >{{ tournament.time_control }} ({{ tournament.chess_type }})</template
                     >
-                </ListItem>
-                <ListItem v-if="tournament.website_link">
-                    <ExternalLinkButton :href="tournament.website_link"
-                        >Link zur Webseite</ExternalLinkButton
+                </DescriptionListItem>
+                <DescriptionListItem>
+                    <template #label>Adresse</template>
+                    <template #value
+                        ><span v-if="tournament.street">{{ tournament.street }},</span>
+                        <span v-if="tournament.plz">{{ tournament.plz }}</span>
+                        {{ tournament.city }}</template
                     >
-                </ListItem>
-                <ListItem v-if="tournament.announcement_link">
-                    <ExternalLinkButton :href="tournament.announcement_link"
-                        >Link zur Ausschreibung</ExternalLinkButton
-                    >
-                </ListItem>
-            </ul>
+                </DescriptionListItem>
+                <DescriptionListItem v-if="tournament.number_of_rounds">
+                    <template #label>Runden</template>
+                    <template #value>{{ tournament.number_of_rounds }}</template>
+                </DescriptionListItem>
+                <DescriptionListItem v-if="isRated">
+                    <template #label>Auswertung</template>
+                    <template #value
+                        ><div class="flex gap-2">
+                            {{ formattedRatings }}
+                        </div>
+                    </template>
+                </DescriptionListItem>
+                <DescriptionListItem v-if="hasLinks">
+                    <template #label>Links</template>
+                    <template #value>
+                        <ExternalLinkButton
+                            v-for="link in availableLinks"
+                            :key="link.label"
+                            :href="link.url"
+                        >
+                            {{ link.label }}
+                        </ExternalLinkButton>
+                    </template>
+                </DescriptionListItem>
+            </dl>
             <LinkButton class="mt-16" href="/">Zurück</LinkButton>
         </div>
     </MainLayout>
 </template>
 
 <script setup>
+import { Head } from '@inertiajs/vue3';
+import { computed } from 'vue';
+
 import MainLayout from '@/Layouts/MainLayout.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
 import SecondaryHeading from '@/Components/Common/SecondaryHeading.vue';
 import DateRange from '@/Components/Common/DateRange.vue';
-import ListItem from '@/Components/List/ListItem.vue';
-import IconLocation from '@/Components/Icons/IconLocation.vue';
-import IconCheckmark from '@/Components/Icons/IconCheckmark.vue';
-import IconClock from '@/Components/Icons/IconClock.vue';
-import IconNumber from '@/Components/Icons/IconNumber.vue';
-import { Head } from '@inertiajs/vue3';
 import ExternalLinkButton from '@/Components/Buttons/ExternalLinkButton.vue';
+import DescriptionListItem from '@/Components/DescriptionList/DescriptionListItem.vue';
 
 const { tournament } = defineProps({ tournament: Object });
+
+// Computed property to generate a list of available links
+const availableLinks = computed(() => {
+    const links = [];
+    if (tournament.chess_results_link) {
+        links.push({ label: 'Chess-Results', url: tournament.chess_results_link });
+    }
+    if (tournament.announcement_link) {
+        links.push({ label: 'Ausschreibung', url: tournament.announcement_link });
+    }
+    if (tournament.website_link) {
+        links.push({ label: 'Turnierseite', url: tournament.website_link });
+    }
+    return links;
+});
+
+// Computed property to generate a comma-separated string of ratings
+const formattedRatings = computed(() => {
+    const ratings = [];
+    if (tournament.elo_rated) ratings.push('ELO');
+    if (tournament.dwz_rated) ratings.push('DWZ');
+    if (tournament.blitz_elo_rated) ratings.push('Blitz-ELO');
+    if (tournament.rapid_elo_rated) ratings.push('Rapid-ELO');
+    return ratings.join(', ');
+});
+
+const hasLinks = computed(() => availableLinks.value.length > 0);
+const isRated = computed(() => formattedRatings.value.length > 0);
 </script>
