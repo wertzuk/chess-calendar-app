@@ -1,5 +1,5 @@
 <template>
-    <p class="mb-6 font-normal text-gray-700 dark:text-gray-400">
+    <p class="font-normal text-gray-700 dark:text-gray-400">
         <span>{{ startDate }}</span>
         <span v-if="endDate && endDate !== startDate"> - {{ endDate }}</span>
     </p>
