@@ -8,7 +8,7 @@
         <DateRange
             :start="tournament.start_date"
             :end="tournament.end_date"
-            class="text-sm mb-6"
+            class="text-sm mb-6 font-normal text-gray-700 dark:text-gray-400"
         ></DateRange>
         <div class="flex flex-wrap gap-2 flex-grow-0 mt-auto">
             <Chip class="flex gap-1" isIconChip="true">
