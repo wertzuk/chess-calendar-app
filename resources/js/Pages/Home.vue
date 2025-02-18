@@ -12,6 +12,9 @@
                 >Turnier erstellen</LinkButton
             >
         </div>
+        <div>
+            <SearchBar class="mb-12"></SearchBar>
+        </div>
         <div v-if="tournaments.length">
             <div v-for="(group, month) in groupedTournaments" :key="date">
                 <ol class="relative border-s border-gray-200 dark:border-gray-700">
@@ -50,6 +53,7 @@ import { computed, onMounted } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import TournamentCard from '@/Components/TournamentCard.vue';
+import SearchBar from '@/Components/SearchBar.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import Paragraph from '@/Components/Common/Paragraph.vue';
 import MainHeading from '@/Components/Common/MainHeading.vue';
