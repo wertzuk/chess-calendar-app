@@ -4,19 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TournamentRequest;
 use App\Models\Tournament;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
 class TournamentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource. Visible for everybody, no auth required
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Visible for everybody, no auth required
+        $query = Tournament::where('start_date', '>=', Carbon::today());
+        if ($request->has('search')) {
+            $query
+                ->whereAny([
+                    'title',
+                    'city',
+                ], 'like', "%$request->search%");
+        }
+
+        $tournaments = $query->get();
+
         return Inertia::render('Home', [
-            'tournaments' => Tournament::all()->map(function ($tournament) {
+            'tournaments' => $tournaments->map(function ($tournament) {
                 $tournament->can = [
                     'edit' => Auth::user()?->can('update', $tournament) ?? false,
                     'delete' => Auth::user()?->can('delete', $tournament) ?? false,
@@ -44,7 +56,7 @@ class TournamentController extends Controller
         $data['user_id'] = auth()->id();
         Tournament::create($data);
 
-        return to_route('home')->with( 'success', 'Erfolgreich erstellt!');
+        return to_route('home')->with('success', 'Erfolgreich erstellt!');
     }
 
     /**
@@ -84,7 +96,7 @@ class TournamentController extends Controller
 
         $tournament->update($request->validated());
 
-        return to_route('home')->with( 'success', 'Erfolgreich bearbeitet!');
+        return to_route('home')->with('success', 'Erfolgreich bearbeitet!');
 
     }
 
@@ -99,6 +111,6 @@ class TournamentController extends Controller
 
         $tournament->delete();
 
-        return to_route('home')->with( 'success', 'Turnier gelöscht!');
+        return to_route('home')->with('success', 'Turnier gelöscht!');
     }
 }
