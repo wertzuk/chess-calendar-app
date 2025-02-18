@@ -13,7 +13,7 @@
             >
         </div>
         <div>
-            <SearchBar class="mb-12"></SearchBar>
+            <SearchBar @input="search" class="mb-12" v-model="searchTerm"></SearchBar>
         </div>
         <div v-if="tournaments.length">
             <div v-for="(group, month) in groupedTournaments" :key="date">
@@ -49,9 +49,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
-import { usePage } from '@inertiajs/vue3';
+import { usePage, router } from '@inertiajs/vue3';
+import { debounce } from 'lodash';
 import TournamentCard from '@/Components/TournamentCard.vue';
 import SearchBar from '@/Components/SearchBar.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
@@ -66,6 +67,7 @@ const tournaments = computed(() => usePage().props.tournaments ?? []);
 const groupedTournaments = computed(() => groupTournaments(tournaments.value));
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const { error, success } = usePage().props.flash;
+const searchTerm = ref('');
 
 onMounted(() => {
     initFlowbite();
@@ -89,6 +91,12 @@ function groupTournaments(tournaments) {
         return grouped;
     }, {});
 }
+
+const search = debounce(() => {
+    console.log('Searching for:', searchTerm.value);
+    const params = searchTerm.value ? { search: searchTerm.value } : {};
+    router.get('/', params, { preserveState: true });
+}, 300);
 
 function transformDate(date) {
     const options = {
