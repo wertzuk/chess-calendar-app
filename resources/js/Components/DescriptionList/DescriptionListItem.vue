@@ -1,5 +1,5 @@
 <template>
-    <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+    <div class="md:px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
         <dt class="text-sm/6 font-medium text-gray-900 dark:text-white">
             <slot name="label">Default Label</slot>
         </dt>
