@@ -2,7 +2,7 @@
     <Link
         as="div"
         :href="route('tournament.show', { id: tournament.id })"
-        class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:border-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-500 duration-200 flex flex-col cursor-pointer"
+        class="p-4 bg-white border border-gray-200 rounded-lg shadow md:hover:border-gray-500 dark:bg-gray-800 dark:border-gray-700 md:dark:hover:border-gray-500 duration-200 flex flex-col cursor-pointer"
         preserve-scroll
     >
         <div class="flex justify-between gap-2 relative">
