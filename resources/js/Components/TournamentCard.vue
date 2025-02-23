@@ -6,11 +6,11 @@
             <h5 class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {{ tournament.title }}
             </h5>
-            <div class="flex flex-none" v-if="tournament.can.delete || tournament.can.edit">
+            <div v-if="tournament.can.delete || tournament.can.edit">
                 <button
                     :id="`dropdown_${tournament.id}`"
                     :data-dropdown-toggle="`dropdownDots_${tournament.id}`"
-                    class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    class="w-10 h-10 flex p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                     type="button"
                 >
                     <IconDots />
