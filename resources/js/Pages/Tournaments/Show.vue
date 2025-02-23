@@ -41,13 +41,15 @@
                 <DescriptionListItem v-if="hasLinks">
                     <template #label>Links</template>
                     <template #value>
-                        <ExternalLinkButton
-                            v-for="link in availableLinks"
-                            :key="link.label"
-                            :href="link.url"
-                        >
-                            {{ link.label }}
-                        </ExternalLinkButton>
+                        <div class="mt-4">
+                            <ExternalLinkButton
+                                v-for="link in availableLinks"
+                                :key="link.label"
+                                :href="link.url"
+                            >
+                                {{ link.label }}
+                            </ExternalLinkButton>
+                        </div>
                     </template>
                 </DescriptionListItem>
             </dl>
