@@ -1,6 +1,9 @@
 <template>
-    <div
-        class="p-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 duration-200 flex flex-col cursor-pointer"
+    <Link
+        as="div"
+        :href="route('tournament.show', { id: tournament.id })"
+        class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:border-gray-500 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-500 duration-200 flex flex-col cursor-pointer"
+        preserve-scroll
     >
         <div class="flex justify-between gap-2 relative">
             <h5 class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -10,7 +13,8 @@
                 <button
                     :id="`dropdown_${tournament.id}`"
                     :data-dropdown-toggle="`dropdownDots_${tournament.id}`"
-                    class="w-10 h-10 flex p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    class="w-10 h-10 flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                    @click.stop
                     type="button"
                 >
                     <IconDots />
@@ -21,6 +25,7 @@
                 >
                     <ul
                         class="py-2 text-sm text-gray-700 dark:text-gray-200"
+                        @click.stop
                         :aria-labelledby="`dropdown_${tournament.id}`"
                     >
                         <li v-if="tournament.can.edit">
@@ -61,7 +66,7 @@
             <Chip v-if="tournament.rapid_elo_rated">Rapid-ELO</Chip>
             <Chip v-if="tournament.blitz_elo_rated">Blitz-ELO</Chip>
         </div>
-    </div>
+    </Link>
 </template>
 
 <script setup>
