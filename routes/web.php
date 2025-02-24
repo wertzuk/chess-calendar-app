@@ -13,6 +13,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('tournaments', TournamentController::class)->except(['index', 'show']);
 });
 
+// Routes that don't require authentication
 Route::get('/', [TournamentController::class, 'index'])->name('home');
 Route::get('/tournaments/{tournament}', [TournamentController::class, 'show'])->name('tournament.show');
 
