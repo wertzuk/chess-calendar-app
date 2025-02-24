@@ -38,7 +38,7 @@
             </div>
         </div>
         <div v-else><Paragraph>Keine Turniere gefunden!</Paragraph></div>
-        <div v-if="success">
+        <div v-if="showSuccess">
             <ToastSuccess>{{ success }}</ToastSuccess>
         </div>
         <div v-if="error">
@@ -53,6 +53,7 @@ import { computed, onMounted, ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage, router } from '@inertiajs/vue3';
 import { debounce } from 'lodash';
+import { initFlowbite } from 'flowbite';
 import TournamentCard from '@/Components/TournamentCard.vue';
 import SearchBar from '@/Components/SearchBar.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
@@ -68,9 +69,14 @@ const groupedTournaments = computed(() => groupTournaments(tournaments.value));
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const { error, success } = usePage().props.flash;
 const searchTerm = ref('');
+const showSuccess = ref(success);
 
 onMounted(() => {
-    initFlowbite();
+    if (showSuccess.value) {
+        setTimeout(() => {
+            showSuccess.value = null;
+        }, 3000);
+    }
 });
 
 /**
@@ -95,7 +101,10 @@ function groupTournaments(tournaments) {
 const search = debounce(() => {
     console.log('Searching for:', searchTerm.value);
     const params = searchTerm.value ? { search: searchTerm.value } : {};
-    router.get('/', params, { preserveState: true });
+    router.get('/', params, {
+        preserveState: true,
+        onFinish: () => console.log('Filtering finished'),
+    });
 }, 300);
 
 function transformDate(date) {
