@@ -25,7 +25,7 @@ class TournamentController extends Controller
                 ], 'like', "%$request->search%");
         }
 
-        $tournaments = $query->paginate(15);
+        $tournaments = $query->paginate(50);
 
         return Inertia::render('Home', [
             'tournaments' => $tournaments->map(function ($tournament) {
