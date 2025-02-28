@@ -25,7 +25,7 @@ class TournamentController extends Controller
                 ], 'like', "%$request->search%");
         }
 
-        $tournaments = $query->paginate(50);
+        $tournaments = $query->orderBy('start_date')->paginate(15);
 
         return Inertia::render('Home', [
             'tournaments' => $tournaments->map(function ($tournament) {
@@ -37,6 +37,18 @@ class TournamentController extends Controller
                 return $tournament;
             }),
         ]);
+    }
+
+    /**
+     * Fetch more tournaments for infinite scroll
+     */
+    public function loadMore(Request $request)
+    {
+        $page = $request->query('page', 1);
+        $tournaments = Tournament::orderBy('start_date', 'desc')
+            ->paginate(10, ['*'], 'page', $page); // Adjust the number of items per page as needed
+
+        return response()->json($tournaments);
     }
 
     /**
