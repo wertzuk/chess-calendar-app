@@ -4,38 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TournamentRequest;
 use App\Models\Tournament;
-use Carbon\Carbon;
+use App\Services\TournamentService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
+
 
 class TournamentController extends Controller
 {
+    protected $tournamentService;
+
+    public function __construct(TournamentService $tournamentService)
+    {
+        $this->tournamentService = $tournamentService;
+    }
+
     /**
      * Display a listing of the resource. Visible for everybody, no auth required
      */
     public function index(Request $request)
     {
-        $query = Tournament::where('start_date', '>=', Carbon::today());
-        if ($request->has('search')) {
-            $query
-                ->whereAny([
-                    'title',
-                    'city',
-                ], 'like', "%$request->search%");
-        }
-
-        $tournaments = $query->orderBy('start_date')->paginate(15);
+        $tournaments = $this->tournamentService->fetchTournaments($request);
 
         return Inertia::render('Home', [
-            'tournaments' => $tournaments->map(function ($tournament) {
-                $tournament->can = [
-                    'edit' => Auth::user()?->can('update', $tournament) ?? false,
-                    'delete' => Auth::user()?->can('delete', $tournament) ?? false,
-                ];
-
-                return $tournament;
-            }),
+            'tournaments' => $this->tournamentService->addCanPermissions($tournaments),
+            'hasMore' => $tournaments->hasMorePages(),
         ]);
     }
 
@@ -45,10 +38,12 @@ class TournamentController extends Controller
     public function loadMore(Request $request)
     {
         $page = $request->query('page', 1);
-        $tournaments = Tournament::orderBy('start_date', 'desc')
-            ->paginate(10, ['*'], 'page', $page); // Adjust the number of items per page as needed
+        $tournaments = $this->tournamentService->fetchTournaments($request, $page);
 
-        return response()->json($tournaments);
+        return response()->json([
+            'tournaments' => $this->tournamentService->addCanPermissions($tournaments),
+            'hasMore' => $tournaments->hasMorePages(),
+        ]);
     }
 
     /**
