@@ -38,6 +38,9 @@
             </div>
         </div>
         <div v-else><Paragraph>Keine Turniere gefunden!</Paragraph></div>
+
+        <!-- <pre class="text-white">{{ groupedTournaments }}</pre> -->
+
         <div v-if="showSuccess">
             <ToastSuccess>{{ success }}</ToastSuccess>
         </div>
@@ -49,11 +52,10 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { Head } from '@inertiajs/vue3';
 import { usePage, router } from '@inertiajs/vue3';
 import { debounce } from 'lodash';
-import { initFlowbite } from 'flowbite';
 import TournamentCard from '@/Components/TournamentCard.vue';
 import SearchBar from '@/Components/SearchBar.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
@@ -64,12 +66,21 @@ import Confirm from '@/Components/Common/Confirm.vue';
 import ToastSuccess from '@/Components/Toast/ToastSuccess.vue';
 import ToastError from '@/Components/Toast/ToastError.vue';
 
-const tournaments = computed(() => usePage().props.tournaments ?? []);
-const groupedTournaments = computed(() => groupTournaments(tournaments.value));
+const initialTournaments = usePage().props.tournaments ?? [];
+console.log(initialTournaments);
+
+// const tournaments = computed(() => usePage().props.tournaments ?? []);
+const tournaments = ref(initialTournaments); // Use a ref for tournaments
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
+const hasMore = computed(() => usePage().props.hasMore ?? false);
+// const groupedTournaments = computed(() => groupTournaments(tournaments.value));
 const { error, success } = usePage().props.flash;
+
 const searchTerm = ref('');
 const showSuccess = ref(success);
+const loading = ref(false);
+const noMoreResults = ref(!hasMore.value);
+const currentPage = ref(1);
 
 onMounted(() => {
     if (showSuccess.value) {
@@ -84,10 +95,12 @@ onMounted(() => {
  *
  * @param {array} tournaments
  */
-function groupTournaments(tournaments) {
-    const sortedTournaments = tournaments.sort(
+// Computed property to group tournaments by month
+const groupedTournaments = computed(() => {
+    const sortedTournaments = [...tournaments.value].sort(
         (a, b) => new Date(a.start_date) - new Date(b.start_date)
     );
+
     return sortedTournaments.reduce((grouped, event) => {
         const transformedDate = transformDate(new Date(event.start_date));
         if (!grouped[transformedDate]) {
@@ -96,16 +109,67 @@ function groupTournaments(tournaments) {
         grouped[transformedDate].push(event);
         return grouped;
     }, {});
-}
+});
 
 const search = debounce(() => {
     console.log('Searching for:', searchTerm.value);
     const params = searchTerm.value ? { search: searchTerm.value } : {};
     router.get('/', params, {
         preserveState: true,
+        onSuccess: (page) => {
+            // Manually update the tournaments array with the new data
+            tournaments.value = page.props.tournaments;
+            noMoreResults.value = !page.props.hasMore;
+            currentPage.value = 1; // Reset the page counter for infinite scroll
+        },
         onFinish: () => console.log('Filtering finished'),
     });
 }, 300);
+
+// Load more tournaments
+const loadMore = async () => {
+    if (loading.value || noMoreResults.value) return;
+
+    loading.value = true;
+    currentPage.value++;
+
+    try {
+        const response = await axios.get('/tournaments/load-more', {
+            params: { page: currentPage.value, searchTerm: searchTerm.value },
+        });
+
+        if (!response.data.hasMore) {
+            noMoreResults.value = true;
+        }
+        // Append new tournaments to the existing array
+        tournaments.value = [...tournaments.value, ...response.data.tournaments];
+    } catch (error) {
+        console.error('Error loading more tournaments:', error);
+    } finally {
+        loading.value = false;
+    }
+};
+
+// Detect scroll to bottom
+const handleScroll = () => {
+    const bottomOfWindow =
+        document.documentElement.scrollTop + window.innerHeight >=
+        document.documentElement.offsetHeight - 100;
+
+    if (bottomOfWindow) {
+        loadMore();
+    }
+};
+
+// Add scroll event listener
+onMounted(() => {
+    window.addEventListener('scroll', handleScroll);
+});
+
+// Clean up scroll event listener
+onUnmounted(() => {
+    window.removeEventListener('scroll', handleScroll);
+});
 
 function transformDate(date) {
     const options = {
