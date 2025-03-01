@@ -12,6 +12,7 @@ class TournamentService
     public function fetchTournaments(Request $request, $page = 1)
     {
         $query = Tournament::where('start_date', '>=', Carbon::today());
+        $perPage = 25;
 
         if ($request->has('search')) {
             $query->whereAny([
@@ -20,7 +21,7 @@ class TournamentService
             ], 'like', "%$request->search%");
         }
 
-        return $query->orderBy('start_date')->paginate(25, ['*'], 'page', $page);
+        return $query->orderBy('start_date')->paginate($perPage, ['*'], 'page', $page);
     }
 
     /**
