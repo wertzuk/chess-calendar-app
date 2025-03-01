@@ -67,13 +67,9 @@ import ToastSuccess from '@/Components/Toast/ToastSuccess.vue';
 import ToastError from '@/Components/Toast/ToastError.vue';
 
 const initialTournaments = usePage().props.tournaments ?? [];
-console.log(initialTournaments);
-
-// const tournaments = computed(() => usePage().props.tournaments ?? []);
 const tournaments = ref(initialTournaments); // Use a ref for tournaments
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const hasMore = computed(() => usePage().props.hasMore ?? false);
-// const groupedTournaments = computed(() => groupTournaments(tournaments.value));
 const { error, success } = usePage().props.flash;
 
 const searchTerm = ref('');
@@ -134,9 +130,15 @@ const loadMore = async () => {
     currentPage.value++;
 
     try {
-        const response = await axios.get('/tournaments/load-more', {
-            params: { page: currentPage.value, searchTerm: searchTerm.value },
-        });
+        const params = {
+            page: currentPage.value,
+        };
+
+        if (searchTerm.value) {
+            params.searchTerm = searchTerm.value;
+        }
+
+        const response = await axios.get('/tournaments/load-more', { params });
 
         if (!response.data.hasMore) {
             noMoreResults.value = true;
