@@ -37,10 +37,7 @@
                         </li>
                         <li v-if="tournament.can.delete">
                             <div
-                                href="#"
-                                @click="destroy"
-                                data-modal-target="popup-modal"
-                                data-modal-toggle="popup-modal"
+                                @click="confirmDeletion"
                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                             >
                                 Löschen
@@ -67,26 +64,62 @@
             <Chip v-if="tournament.blitz_elo_rated">Blitz-ELO</Chip>
         </div>
     </Link>
+    <Modal :show="confirmingDeletion" maxWidth="sm">
+        <div class="p-6">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100 text-center">
+                Sind Sie sicher?
+            </h2>
+
+            <div class="mt-6 flex justify-center">
+                <SecondaryButton @click="closeModal"> Nein </SecondaryButton>
+
+                <DangerButton
+                    class="ms-3"
+                    :class="{ 'opacity-25': form.processing }"
+                    :disabled="form.processing"
+                    @click="destroy"
+                >
+                    Ja
+                </DangerButton>
+            </div>
+        </div>
+    </Modal>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { nextTick, onMounted, ref } from 'vue';
 import { initFlowbite } from 'flowbite';
-import { Link, useForm } from '@inertiajs/vue3';
+import { Link, useForm, router } from '@inertiajs/vue3';
 import Chip from '@/Components/Common/Chip.vue';
+import DangerButton from './Buttons/DangerButton.vue';
+import SecondaryButton from './Buttons/SecondaryButton.vue';
+import Modal from './Common/Modal.vue';
 import IconLocation from '@/Components/Icons/IconLocation.vue';
 import IconDots from '@/Components/Icons/IconDots.vue';
 import DateRange from './Common/DateRange.vue';
 
 const props = defineProps(['tournament']);
 const form = useForm({});
+const confirmingDeletion = ref(false);
 
-function destroy() {
-    const submitBtn = document.getElementById('confirm');
-    submitBtn.addEventListener('click', () => {
-        form.delete(route('tournaments.destroy', { id: props.tournament.id }));
+const confirmDeletion = () => {
+    confirmingDeletion.value = true;
+};
+
+const closeModal = () => (confirmingDeletion.value = false);
+
+const destroy = () => {
+    form.delete(route('tournaments.destroy', props.tournament.id), {
+        onSuccess: () => {
+            closeModal();
+            router.visit(route('home'), {
+                only: ['tournaments'], // Only reload the tournaments data
+                preserveScroll: true,
+            });
+        },
+        // onFinish: () => location.reload(),
     });
-}
+};
 
 onMounted(() => {
     initFlowbite();
