@@ -52,10 +52,7 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import { useTournaments } from '@/composables/useTournaments';
-import { useInfiniteScroll } from '@/composables/useInfiniteScroll';
-import { useSearch } from '@/composables/useSearch';
-import { useFlashMessages } from '@/composables/useFlashMessages';
+import { useTournaments, useInfiniteScroll, useSearch, useFlashMessages } from '@/composables';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import TournamentCard from '@/Components/TournamentCard.vue';
