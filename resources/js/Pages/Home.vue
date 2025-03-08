@@ -52,6 +52,7 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useTournaments } from '@/composables/useTournaments';
 import { Head } from '@inertiajs/vue3';
 import { usePage, router } from '@inertiajs/vue3';
 import { debounce } from 'lodash';
@@ -61,7 +62,6 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import Paragraph from '@/Components/Common/Paragraph.vue';
 import MainHeading from '@/Components/Common/MainHeading.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
-import Confirm from '@/Components/Common/Confirm.vue';
 import ToastSuccess from '@/Components/Toast/ToastSuccess.vue';
 import ToastError from '@/Components/Toast/ToastError.vue';
 
@@ -70,8 +70,6 @@ const tournaments = ref(initialTournaments); // Use a ref for tournaments
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const hasMore = computed(() => usePage().props.hasMore ?? false);
 const { error, success } = usePage().props.flash;
-
-console.log('Flash message:', success); // Debugging
 
 const searchTerm = ref('');
 const showSuccess = ref(success);
@@ -89,26 +87,7 @@ onMounted(() => {
     }
 });
 
-/**
- * Group tournaments by month
- *
- * @param {array} tournaments
- */
-// Computed property to group tournaments by month
-const groupedTournaments = computed(() => {
-    const sortedTournaments = [...tournaments.value].sort(
-        (a, b) => new Date(a.start_date) - new Date(b.start_date)
-    );
-
-    return sortedTournaments.reduce((grouped, event) => {
-        const transformedDate = transformDate(new Date(event.start_date));
-        if (!grouped[transformedDate]) {
-            grouped[transformedDate] = [];
-        }
-        grouped[transformedDate].push(event);
-        return grouped;
-    }, {});
-});
+const { groupedTournaments } = useTournaments(tournaments);
 
 const search = debounce(() => {
     console.log('Searching for:', searchTerm.value);
