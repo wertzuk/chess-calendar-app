@@ -42,7 +42,7 @@
         <!-- <pre class="text-white">{{ groupedTournaments }}</pre> -->
 
         <div v-if="showSuccess">
-            <ToastSuccess>{{ success }}</ToastSuccess>
+            <ToastSuccess>{{ showSuccess }}</ToastSuccess>
         </div>
         <div v-if="error">
             <ToastError>{{ error }}</ToastError>
@@ -51,10 +51,11 @@
 </template>
 
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useTournaments } from '@/composables/useTournaments';
 import { useInfiniteScroll } from '@/composables/useInfiniteScroll';
 import { useSearch } from '@/composables/useSearch';
+import { useFlashMessages } from '@/composables/useFlashMessages';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
 import TournamentCard from '@/Components/TournamentCard.vue';
@@ -69,23 +70,11 @@ import ToastError from '@/Components/Toast/ToastError.vue';
 const initialTournaments = usePage().props.tournaments ?? [];
 const tournaments = ref(initialTournaments); // Use a ref for tournaments
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
-const { error, success } = usePage().props.flash;
-
-const showSuccess = ref(success);
 const loading = ref(false);
-
-onMounted(() => {
-    console.log('mounted');
-
-    if (showSuccess.value) {
-        setTimeout(() => {
-            showSuccess.value = null;
-        }, 3000);
-    }
-});
 
 const { groupedTournaments } = useTournaments(tournaments);
 const { searchTerm, search, noMoreResults, currentPage } = useSearch(tournaments); // Pass tournaments ref to useSearch
+const { showSuccess, error } = useFlashMessages();
 
 // Load more tournaments for infinite scroll
 const loadMore = async () => {
