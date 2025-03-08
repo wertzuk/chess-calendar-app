@@ -53,6 +53,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useTournaments } from '@/composables/useTournaments';
+import { useInfiniteScroll } from '@/composables/useInfiniteScroll';
 import { Head } from '@inertiajs/vue3';
 import { usePage, router } from '@inertiajs/vue3';
 import { debounce } from 'lodash';
@@ -104,7 +105,7 @@ const search = debounce(() => {
     });
 }, 300);
 
-// Load more tournaments
+// Load more tournaments for infinite scroll
 const loadMore = async () => {
     if (loading.value || noMoreResults.value) return;
 
@@ -134,33 +135,5 @@ const loadMore = async () => {
     }
 };
 
-// Detect scroll to bottom
-const handleScroll = () => {
-    const bottomOfWindow =
-        document.documentElement.scrollTop + window.innerHeight >=
-        document.documentElement.offsetHeight - 100;
-
-    if (bottomOfWindow) {
-        loadMore();
-    }
-};
-
-// Add scroll event listener
-onMounted(() => {
-    window.addEventListener('scroll', handleScroll);
-});
-
-// Clean up scroll event listener
-onUnmounted(() => {
-    window.removeEventListener('scroll', handleScroll);
-});
-
-function transformDate(date) {
-    const options = {
-        year: 'numeric',
-        month: 'long',
-    };
-
-    return date.toLocaleDateString('de-DE', options);
-}
+useInfiniteScroll(loadMore);
 </script>
