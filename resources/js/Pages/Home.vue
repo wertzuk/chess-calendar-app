@@ -54,9 +54,9 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useTournaments } from '@/composables/useTournaments';
 import { useInfiniteScroll } from '@/composables/useInfiniteScroll';
+import { useSearch } from '@/composables/useSearch';
 import { Head } from '@inertiajs/vue3';
-import { usePage, router } from '@inertiajs/vue3';
-import { debounce } from 'lodash';
+import { usePage } from '@inertiajs/vue3';
 import TournamentCard from '@/Components/TournamentCard.vue';
 import SearchBar from '@/Components/SearchBar.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
@@ -69,14 +69,10 @@ import ToastError from '@/Components/Toast/ToastError.vue';
 const initialTournaments = usePage().props.tournaments ?? [];
 const tournaments = ref(initialTournaments); // Use a ref for tournaments
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
-const hasMore = computed(() => usePage().props.hasMore ?? false);
 const { error, success } = usePage().props.flash;
 
-const searchTerm = ref('');
 const showSuccess = ref(success);
 const loading = ref(false);
-const noMoreResults = ref(!hasMore.value);
-const currentPage = ref(1);
 
 onMounted(() => {
     console.log('mounted');
@@ -89,21 +85,7 @@ onMounted(() => {
 });
 
 const { groupedTournaments } = useTournaments(tournaments);
-
-const search = debounce(() => {
-    console.log('Searching for:', searchTerm.value);
-    const params = searchTerm.value ? { search: searchTerm.value } : {};
-    router.get('/', params, {
-        preserveState: true,
-        onSuccess: (page) => {
-            // Manually update the tournaments array with the new data
-            tournaments.value = page.props.tournaments;
-            noMoreResults.value = !page.props.hasMore;
-            currentPage.value = 1; // Reset the page counter for infinite scroll
-        },
-        onFinish: () => console.log('Filtering finished'),
-    });
-}, 300);
+const { searchTerm, search, noMoreResults, currentPage } = useSearch(tournaments); // Pass tournaments ref to useSearch
 
 // Load more tournaments for infinite scroll
 const loadMore = async () => {
