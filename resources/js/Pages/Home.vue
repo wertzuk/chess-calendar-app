@@ -48,7 +48,6 @@
             <ToastError>{{ error }}</ToastError>
         </div>
     </MainLayout>
-    <Confirm v-if="isLoggedIn" />
 </template>
 
 <script setup>
@@ -72,6 +71,8 @@ const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const hasMore = computed(() => usePage().props.hasMore ?? false);
 const { error, success } = usePage().props.flash;
 
+console.log('Flash message:', success); // Debugging
+
 const searchTerm = ref('');
 const showSuccess = ref(success);
 const loading = ref(false);
@@ -79,6 +80,8 @@ const noMoreResults = ref(!hasMore.value);
 const currentPage = ref(1);
 
 onMounted(() => {
+    console.log('mounted');
+
     if (showSuccess.value) {
         setTimeout(() => {
             showSuccess.value = null;
