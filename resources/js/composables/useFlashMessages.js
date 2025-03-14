@@ -6,6 +6,8 @@ export function useFlashMessages() {
     const showSuccess = ref(success);
 
     onMounted(() => {
+        usePage().props.flash.success = null; // Clear Inertia props
+        usePage().props.flash.error = null;
         if (showSuccess.value) {
             setTimeout(() => {
                 showSuccess.value = null;
