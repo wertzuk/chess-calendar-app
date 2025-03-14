@@ -26,6 +26,10 @@
                         {{ tournament.city }}</template
                     >
                 </DescriptionListItem>
+                <DescriptionListItem v-if="tournament.prize_fund">
+                    <template #label>Preisfonds</template>
+                    <template #value>{{ tournament.prize_fund }}</template>
+                </DescriptionListItem>
                 <DescriptionListItem v-if="tournament.number_of_rounds">
                     <template #label>Runden</template>
                     <template #value>{{ tournament.number_of_rounds }}</template>

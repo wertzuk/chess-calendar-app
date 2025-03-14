@@ -80,6 +80,13 @@
                 maxlength="50"
                 >Ausrichter</FormInput
             >
+            <FormInput
+                v-model="form.prize_fund"
+                fieldKey="prize_fund"
+                :error="form.errors.prize_fund"
+                maxlength="50"
+                >Preisfonds</FormInput
+            >
             <FormRow>
                 <FormCheckbox v-model="form.elo_rated" fieldKey="elo_rated"
                     >ELO Auswertung</FormCheckbox
@@ -159,6 +166,7 @@ const form = useForm({
     street: tournament.street,
     plz: tournament.plz,
     organizer: tournament.organizer,
+    prize_fund: tournament.prize_fund,
     elo_rated: tournament.elo_rated,
     dwz_rated: tournament.dwz_rated,
     blitz_elo_rated: tournament.blitz_elo_rated,

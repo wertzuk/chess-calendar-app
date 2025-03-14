@@ -35,6 +35,7 @@ class TournamentRequest extends FormRequest
             'dwz_rated' => 'boolean',
             'blitz_elo_rated' => 'boolean',
             'rapid_elo_rated' => 'boolean',
+            'prize_fund' => 'nullable',
             'chess_results_link' => 'nullable|url',
             'website_link' => 'nullable|url',
             'announcement_link' => 'nullable|url',
