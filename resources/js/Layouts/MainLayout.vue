@@ -5,6 +5,7 @@ import DropdownLink from '@/Components/Menu/MenuDropdownLink.vue';
 import NavLink from '@/Components/Menu/MenuNavLink.vue';
 import ResponsiveNavLink from '@/Components/Menu/MenuNavLinkResponsive.vue';
 import { Link } from '@inertiajs/vue3';
+import LinkButton from '@/Components/Buttons/LinkButton.vue';
 
 const showingNavigationDropdown = ref(false);
 </script>
@@ -24,9 +25,18 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
                             </div>
                         </div>
+
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
-                            <div class="relative ms-3">
+                            <div class="relative ms-3 flex gap-10 items-center">
+                                <LinkButton
+                                    :href="route('tournaments.create')"
+                                    preserve-scroll
+                                    as="button"
+                                    class="sm:block"
+                                    v-if="$page.props.auth.user"
+                                    >Turnier erstellen</LinkButton
+                                >
                                 <Dropdown align="right" width="48" v-if="$page.props.auth.user">
                                     <template #trigger>
                                         <span class="inline-flex rounded-md">
@@ -83,40 +93,50 @@ const showingNavigationDropdown = ref(false);
                             </div>
                         </div>
 
-                        <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
-                            <button
-                                @click="showingNavigationDropdown = !showingNavigationDropdown"
-                                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400"
+                        <div class="sm:hidden flex items-center gap-4">
+                            <LinkButton
+                                :href="route('tournaments.create')"
+                                preserve-scroll
+                                as="button"
+                                v-if="$page.props.auth.user"
+                                >Turnier erstellen</LinkButton
                             >
-                                <svg
-                                    class="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
+
+                            <!-- Hamburger -->
+                            <div class="-me-2 flex items-center">
+                                <button
+                                    @click="showingNavigationDropdown = !showingNavigationDropdown"
+                                    class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none dark:text-gray-500 dark:hover:bg-gray-900 dark:hover:text-gray-400 dark:focus:bg-gray-900 dark:focus:text-gray-400"
                                 >
-                                    <path
-                                        :class="{
-                                            hidden: showingNavigationDropdown,
-                                            'inline-flex': !showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !showingNavigationDropdown,
-                                            'inline-flex': showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
+                                    <svg
+                                        class="h-6 w-6"
+                                        stroke="currentColor"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            :class="{
+                                                hidden: showingNavigationDropdown,
+                                                'inline-flex': !showingNavigationDropdown,
+                                            }"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M4 6h16M4 12h16M4 18h16"
+                                        />
+                                        <path
+                                            :class="{
+                                                hidden: !showingNavigationDropdown,
+                                                'inline-flex': showingNavigationDropdown,
+                                            }"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

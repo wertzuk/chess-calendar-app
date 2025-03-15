@@ -3,15 +3,7 @@
 
     <MainLayout>
         <MainHeading>Schachturnier-Kalender</MainHeading>
-        <div class="mb-10">
-            <LinkButton
-                :href="route('tournaments.create')"
-                preserve-scroll
-                as="button"
-                v-if="isLoggedIn"
-                >Turnier erstellen</LinkButton
-            >
-        </div>
+
         <div>
             <SearchBar @input="search" class="mb-12" v-model="searchTerm"></SearchBar>
         </div>
@@ -65,12 +57,12 @@ import ToastSuccess from '@/Components/Toast/ToastSuccess.vue';
 import ToastError from '@/Components/Toast/ToastError.vue';
 
 const initialTournaments = usePage().props.tournaments ?? [];
-const tournaments = ref(initialTournaments); // Use a ref for tournaments
+const tournaments = ref(initialTournaments);
 const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const loading = ref(false);
 
 const { groupedTournaments } = useTournaments(tournaments);
-const { searchTerm, search, noMoreResults, currentPage } = useSearch(tournaments); // Pass tournaments ref to useSearch
+const { searchTerm, search, noMoreResults, currentPage } = useSearch(tournaments);
 const { showSuccess, error } = useFlashMessages();
 
 // Load more tournaments for infinite scroll
