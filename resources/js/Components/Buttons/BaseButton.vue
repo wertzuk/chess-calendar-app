@@ -1,7 +1,7 @@
 <template>
     <button
         :class="[
-            'font-medium rounded-lg text-sm px-5 py-2.5 mb-2 focus:outline-none',
+            'font-medium rounded-lg text-sm px-5 py-2.5  focus:outline-none',
             customClasses,
             ringClasses,
             hoverClasses,
