@@ -64,7 +64,7 @@ const showingNavigationDropdown = ref(false);
 
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')">
-                                            Profile
+                                            Profil
                                         </DropdownLink>
                                         <DropdownLink
                                             :href="route('logout')"
@@ -87,7 +87,7 @@ const showingNavigationDropdown = ref(false);
                                         :href="route('register')"
                                         class="rounded-md px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none dark:bg-gray-800 dark:text-gray-400 dark:hover:text-gray-300"
                                     >
-                                        Register
+                                        Registrieren
                                     </Link>
                                 </div>
                             </div>
@@ -168,7 +168,7 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="mt-3 space-y-1" v-if="$page.props.auth.user">
                             <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
+                                Profil
                             </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('logout')" method="post" as="button">
                                 Log Out
@@ -177,7 +177,7 @@ const showingNavigationDropdown = ref(false);
                         <div class="mt-3 space-y-1" v-else>
                             <ResponsiveNavLink :href="route('login')"> Login </ResponsiveNavLink>
                             <ResponsiveNavLink :href="route('register')" as="button">
-                                Register
+                                Regististrieren
                             </ResponsiveNavLink>
                         </div>
                     </div>
