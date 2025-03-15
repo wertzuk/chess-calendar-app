@@ -28,7 +28,7 @@ const showingNavigationDropdown = ref(false);
 
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
-                            <div class="relative ms-3 flex gap-10 items-center">
+                            <div class="relative ms-3 flex gap-4 items-center">
                                 <LinkButton
                                     :href="route('tournaments.create')"
                                     preserve-scroll
