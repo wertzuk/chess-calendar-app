@@ -45,7 +45,7 @@
                 <DescriptionListItem v-if="hasLinks">
                     <template #label>Links</template>
                     <template #value>
-                        <div class="mt-4">
+                        <div class="mt-4 sm:mt-0 flex flex-wrap">
                             <ExternalLinkButton
                                 v-for="link in availableLinks"
                                 :key="link.label"
