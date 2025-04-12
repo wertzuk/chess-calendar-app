@@ -15,7 +15,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Poppins', 'sans-serif'],
             },
             gridTemplateColumns: {
                 'fill-300': 'repeat(auto-fill, minmax(300px, 1fr))',
