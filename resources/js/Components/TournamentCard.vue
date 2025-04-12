@@ -6,9 +6,9 @@
         preserve-scroll
     >
         <div class="flex justify-between gap-2 relative">
-            <h5 class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h2 class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
                 {{ tournament.title }}
-            </h5>
+            </h2>
             <div v-if="tournament.can.delete || tournament.can.edit">
                 <button
                     :id="`dropdown_${tournament.id}`"
@@ -47,16 +47,27 @@
                 </div>
             </div>
         </div>
-        <DateRange
-            :start="tournament.start_date"
-            :end="tournament.end_date"
-            class="text-sm mb-6 font-normal text-gray-700 dark:text-gray-400"
-        ></DateRange>
+        <div class="py-4">
+            <div class="flex gap-2">
+                <IconCalendar />
+                <DateRange
+                    :start="tournament.start_date"
+                    :end="tournament.end_date"
+                    class="text-sm mb-2 font-normal text-gray-700 dark:text-gray-400"
+                ></DateRange>
+            </div>
+            <div class="flex gap-2">
+                <IconLocation class="dark:text-gray-400" />
+                <span class="text-sm mb-2 font-normal text-gray-700 dark:text-gray-400">{{
+                    tournament.city
+                }}</span>
+            </div>
+        </div>
         <div class="flex flex-wrap gap-2 flex-grow-0 mt-auto">
-            <Chip class="flex gap-1" isIconChip="true">
+            <!-- <Chip class="flex gap-1" isIconChip="true">
                 <IconLocation />
                 <span>{{ tournament.city }}</span>
-            </Chip>
+            </Chip> -->
             <Chip>{{ tournament.chess_type }}</Chip>
             <Chip v-if="tournament.elo_rated">ELO</Chip>
             <Chip v-if="tournament.dwz_rated">DWZ</Chip>
@@ -87,7 +98,7 @@
 </template>
 
 <script setup>
-import { nextTick, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { Link, useForm, router } from '@inertiajs/vue3';
 import Chip from '@/Components/Common/Chip.vue';
@@ -97,6 +108,7 @@ import Modal from './Common/Modal.vue';
 import IconLocation from '@/Components/Icons/IconLocation.vue';
 import IconDots from '@/Components/Icons/IconDots.vue';
 import DateRange from './Common/DateRange.vue';
+import IconCalendar from './Icons/IconCalendar.vue';
 
 const props = defineProps(['tournament']);
 const form = useForm({});
