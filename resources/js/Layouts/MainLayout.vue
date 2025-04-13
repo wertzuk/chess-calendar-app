@@ -114,7 +114,14 @@ function toggleTheme() {
                             </div>
                         </div>
 
-                        <div class="sm:hidden flex items-center gap-4">
+                        <div class="sm:hidden flex items-center gap-2">
+                            <SecondaryButton
+                                class="border-none focus:ring-0 px-2"
+                                @click="toggleTheme"
+                            >
+                                <IconLight v-if="isDark" />
+                                <IconDark v-else />
+                            </SecondaryButton>
                             <LinkButton
                                 :href="route('tournaments.create')"
                                 preserve-scroll
