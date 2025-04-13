@@ -9,15 +9,14 @@
         </div>
         <div v-if="tournaments.length">
             <div v-for="(group, month) in groupedTournaments" :key="date">
-                <ol class="relative border-s border-gray-200 dark:border-gray-700">
+                <ol class="relative border-s border-gray-300 dark:border-gray-700">
                     <li class="ms-4 pb-12">
                         <div
-                            class="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"
+                            class="absolute w-3 h-3 bg-gray-300 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"
                         ></div>
-                        <time
-                            class="mb-1 text-sm font-normal leading-none text-gray-400 dark:text-gray-500"
-                            >{{ month }}</time
-                        >
+                        <time class="mb-1 text-sm font-normal leading-none text-gray-500">{{
+                            month
+                        }}</time>
                         <div class="mt-2 grid grid-cols-fill-300 gap-4 mx-auto">
                             <TournamentCard
                                 :tournament="tournament"
