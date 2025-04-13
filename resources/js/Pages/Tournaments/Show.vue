@@ -5,7 +5,7 @@
         <div class="max-w-2xl mx-auto">
             <SecondaryHeading class="mb-12">{{ tournament.title }}</SecondaryHeading>
 
-            <dl class="divide-y divide-gray-100 dark:divide-gray-700">
+            <dl class="divide-y divide-gray-400 dark:divide-gray-700">
                 <DescriptionListItem>
                     <template #label>Datum</template>
                     <template #value

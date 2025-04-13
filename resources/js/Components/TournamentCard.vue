@@ -48,7 +48,7 @@
         </div>
         <div class="py-4">
             <div class="flex gap-2">
-                <IconCalendar />
+                <IconCalendar class="text-black dark:text-white" />
                 <DateRange
                     :start="tournament.start_date"
                     :end="tournament.end_date"
