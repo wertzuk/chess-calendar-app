@@ -128,8 +128,12 @@
 
         <div class="flex justify-between">
             <LinkButton type="button" class="mt-8" href="/">Zurück</LinkButton>
-            <PrimaryButton class="mt-8" v-if="isCreate">Erstellen</PrimaryButton>
-            <PrimaryButton class="mt-8" v-else>Speichern</PrimaryButton>
+            <PrimaryButton class="mt-8 dark:bg-green-800 dark:hover:bg-green-900" v-if="isCreate"
+                >Erstellen</PrimaryButton
+            >
+            <PrimaryButton class="mt-8 dark:bg-green-800 dark:hover:bg-green-900" v-else
+                >Speichern</PrimaryButton
+            >
         </div>
     </form>
 </template>
