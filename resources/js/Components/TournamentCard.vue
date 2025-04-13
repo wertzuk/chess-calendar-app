@@ -52,12 +52,12 @@
                 <DateRange
                     :start="tournament.start_date"
                     :end="tournament.end_date"
-                    class="text-sm mb-2 font-normal text-gray-700 dark:text-gray-400"
+                    class="text-sm mb-2 font-light text-gray-700 dark:text-gray-400"
                 ></DateRange>
             </div>
             <div class="flex gap-2">
                 <IconLocation class="dark:text-gray-400" />
-                <span class="text-sm mb-2 font-normal text-gray-700 dark:text-gray-400">{{
+                <span class="text-sm mb-2 font-light text-gray-700 dark:text-gray-400">{{
                     tournament.city
                 }}</span>
             </div>
