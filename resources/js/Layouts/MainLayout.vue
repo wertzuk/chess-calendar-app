@@ -6,8 +6,21 @@ import NavLink from '@/Components/Menu/MenuNavLink.vue';
 import ResponsiveNavLink from '@/Components/Menu/MenuNavLinkResponsive.vue';
 import { Link } from '@inertiajs/vue3';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
+import IconButton from '@/Components/Buttons/IconButton.vue';
+import IconLight from '@/Components/Icons/IconLight.vue';
+import IconDark from '@/Components/Icons/IconDark.vue';
+import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
+import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
 
 const showingNavigationDropdown = ref(false);
+const isDark = ref(document.documentElement.classList.contains('dark'));
+console.log(isDark.value);
+
+function toggleTheme() {
+    isDark.value = !isDark.value;
+    document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark.value ? 'dark' : 'light');
+}
 </script>
 
 <template>
@@ -29,6 +42,14 @@ const showingNavigationDropdown = ref(false);
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
                             <div class="relative ms-3 flex gap-4 items-center">
+                                <SecondaryButton
+                                    class="border-none focus:ring-0"
+                                    @click="toggleTheme"
+                                >
+                                    <IconLight v-if="isDark" />
+                                    <IconDark v-else />
+                                </SecondaryButton>
+
                                 <LinkButton
                                     :href="route('tournaments.create')"
                                     preserve-scroll

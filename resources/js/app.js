@@ -22,3 +22,12 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
+
+const userTheme = localStorage.getItem('theme') ?? 'dark';
+const root = document.documentElement;
+
+if (userTheme === 'dark') {
+    root.classList.add('dark');
+} else {
+    root.classList.remove('dark');
+}

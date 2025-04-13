@@ -80,8 +80,8 @@
                 Sind Sie sicher?
             </h2>
 
-            <div class="mt-6 flex justify-center">
-                <SecondaryButton @click="closeModal"> Nein </SecondaryButton>
+            <div class="mt-6 cl flex justify-center">
+                <SecondaryButton class="mb-2" @click="closeModal"> Nein </SecondaryButton>
 
                 <DangerButton
                     class="ms-3"
