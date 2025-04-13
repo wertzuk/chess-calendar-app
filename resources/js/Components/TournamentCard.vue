@@ -6,7 +6,7 @@
         preserve-scroll
     >
         <div class="flex justify-between gap-2 relative">
-            <h2 class="mb-1 text-xl font-bold tracking-tight text-gray-900 dark:text-white">
+            <h2 class="mb-1 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                 {{ tournament.title }}
             </h2>
             <div v-if="tournament.can.delete || tournament.can.edit">
