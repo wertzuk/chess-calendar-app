@@ -2,7 +2,7 @@
     <Head title="Home" />
 
     <MainLayout>
-        <MainHeading>Schachturnier-Kalender</MainHeading>
+        <MainHeading class="mb-12">Schachturnier-Kalender</MainHeading>
 
         <div>
             <SearchBar @input="search" class="mb-12" v-model="searchTerm"></SearchBar>
