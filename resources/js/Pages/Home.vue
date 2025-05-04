@@ -4,6 +4,57 @@
     <MainLayout>
         <MainHeading class="mb-12">Schachturnier-Kalender</MainHeading>
 
+        <div class="mb-6 flex gap-4">
+            <div>
+                <label for="all" class="dark:text-white"><Chip>Alle</Chip></label>
+                <input
+                    type="radio"
+                    v-model="typeFilter"
+                    name="type"
+                    id="all"
+                    value=""
+                    class="invisible"
+                    @change="search"
+                />
+            </div>
+            <div>
+                <label for="classical" class="dark:text-white"><Chip>Klassisch</Chip></label>
+                <input
+                    type="radio"
+                    v-model="typeFilter"
+                    name="type"
+                    id="classical"
+                    value="Klassisch"
+                    class="invisible"
+                    @change="search"
+                />
+            </div>
+            <div>
+                <label for="rapid" class="dark:text-white"><Chip>Schnellschach</Chip></label>
+                <input
+                    type="radio"
+                    v-model="typeFilter"
+                    name="type"
+                    id="rapid"
+                    value="Schnellschach"
+                    class="invisible"
+                    @change="search"
+                />
+            </div>
+            <div>
+                <label for="blitz" class="dark:text-white"><Chip>Blitz</Chip></label>
+                <input
+                    type="radio"
+                    v-model="typeFilter"
+                    name="type"
+                    id="blitz"
+                    value="Blitz"
+                    class="invisible"
+                    @change="search"
+                />
+            </div>
+        </div>
+        {{ type }}
         <div>
             <SearchBar @input="search" class="mb-12" v-model="searchTerm"></SearchBar>
         </div>
@@ -46,6 +97,7 @@ import { computed, ref } from 'vue';
 import { useTournaments, useInfiniteScroll, useSearch, useFlashMessages } from '@/composables';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
+import Chip from '@/Components/Common/Chip.vue';
 import TournamentCard from '@/Components/TournamentCard.vue';
 import SearchBar from '@/Components/SearchBar.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
@@ -61,8 +113,9 @@ const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const loading = ref(false);
 
 const { groupedTournaments } = useTournaments(tournaments);
-const { searchTerm, search, noMoreResults, currentPage } = useSearch(tournaments);
+const { searchTerm, typeFilter, search, noMoreResults, currentPage } = useSearch(tournaments);
 const { showSuccess, error } = useFlashMessages();
+const type = ref('');
 
 // Load more tournaments for infinite scroll
 const loadMore = async () => {

@@ -4,11 +4,17 @@ import { debounce } from 'lodash';
 
 export function useSearch(tournaments) {
     const searchTerm = ref('');
+    const typeFilter = ref('');
     const noMoreResults = ref(false);
     const currentPage = ref(1);
 
     const search = debounce(() => {
-        const params = searchTerm.value ? { search: searchTerm.value } : {};
+        console.log('search');
+
+        const params = {};
+        if (searchTerm.value) params.search = searchTerm.value;
+        if (typeFilter.value) params.type = typeFilter.value;
+
         router.get('/', params, {
             preserveState: true,
             onSuccess: (page) => {
@@ -25,6 +31,7 @@ export function useSearch(tournaments) {
         searchTerm,
         noMoreResults,
         currentPage,
+        typeFilter,
         search,
     };
 }

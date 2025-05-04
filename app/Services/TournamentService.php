@@ -11,7 +11,8 @@ class TournamentService
 {
     public function fetchTournaments(Request $request, $page = 1)
     {
-        $query = Tournament::where('start_date', '>=', Carbon::today());
+        // $query = Tournament::where('start_date', '>=', Carbon::today());
+        $query = Tournament::query();
         $perPage = 25;
 
         if ($request->has('search')) {
@@ -21,7 +22,12 @@ class TournamentService
             ], 'like', "%$request->search%");
         }
 
-        return $query->orderBy('start_date')->paginate($perPage, ['*'], 'page', $page);
+        if ($request->has('type')) {
+            $query->where('chess_type',  $request->type);
+        }
+
+        return $query->orderBy('start_date')
+            ->paginate($perPage, ['*'], 'page', $page);
     }
 
     /**
