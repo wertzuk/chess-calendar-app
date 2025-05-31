@@ -4,60 +4,21 @@
     <MainLayout>
         <MainHeading class="mb-12">Schachturnier-Kalender</MainHeading>
 
-        <div class="mb-6 flex gap-4">
-            <div>
-                <label for="all" class="dark:text-white"><Chip>Alle</Chip></label>
-                <input
-                    type="radio"
-                    v-model="typeFilter"
-                    name="type"
-                    id="all"
-                    value=""
-                    class="invisible"
-                    @change="search"
-                />
-            </div>
-            <div>
-                <label for="classical" class="dark:text-white"><Chip>Klassisch</Chip></label>
-                <input
-                    type="radio"
-                    v-model="typeFilter"
-                    name="type"
-                    id="classical"
-                    value="Klassisch"
-                    class="invisible"
-                    @change="search"
-                />
-            </div>
-            <div>
-                <label for="rapid" class="dark:text-white"><Chip>Schnellschach</Chip></label>
-                <input
-                    type="radio"
-                    v-model="typeFilter"
-                    name="type"
-                    id="rapid"
-                    value="Schnellschach"
-                    class="invisible"
-                    @change="search"
-                />
-            </div>
-            <div>
-                <label for="blitz" class="dark:text-white"><Chip>Blitz</Chip></label>
-                <input
-                    type="radio"
-                    v-model="typeFilter"
-                    name="type"
-                    id="blitz"
-                    value="Blitz"
-                    class="invisible"
-                    @change="search"
-                />
-            </div>
+        <div class="flex gap-2 mb-6">
+            <FilterButton
+                v-for="t in types"
+                :key="t.value"
+                @click="filters.type = t.value"
+                :active="filters.type === t.value"
+            >
+                {{ t.label }}
+            </FilterButton>
         </div>
-        {{ type }}
+
         <div>
-            <SearchBar @input="search" class="mb-12" v-model="searchTerm"></SearchBar>
+            <SearchBar class="mb-12" v-model="filters.searchTerm"></SearchBar>
         </div>
+
         <div v-if="tournaments.length">
             <div v-for="(group, month) in groupedTournaments" :key="date">
                 <ol class="relative border-s border-gray-300 dark:border-gray-700">
@@ -97,13 +58,12 @@ import { computed, ref } from 'vue';
 import { useTournaments, useInfiniteScroll, useSearch, useFlashMessages } from '@/composables';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
-import Chip from '@/Components/Common/Chip.vue';
 import TournamentCard from '@/Components/TournamentCard.vue';
 import SearchBar from '@/Components/SearchBar.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import Paragraph from '@/Components/Common/Paragraph.vue';
 import MainHeading from '@/Components/Common/MainHeading.vue';
-import LinkButton from '@/Components/Buttons/LinkButton.vue';
+import FilterButton from '@/Components/Buttons/FilterButton.vue';
 import ToastSuccess from '@/Components/Toast/ToastSuccess.vue';
 import ToastError from '@/Components/Toast/ToastError.vue';
 
@@ -113,9 +73,14 @@ const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const loading = ref(false);
 
 const { groupedTournaments } = useTournaments(tournaments);
-const { searchTerm, typeFilter, search, noMoreResults, currentPage } = useSearch(tournaments);
+const { noMoreResults, currentPage, filters } = useSearch(tournaments);
 const { showSuccess, error } = useFlashMessages();
-const type = ref('');
+const types = [
+    { label: 'Alle', value: '' },
+    { label: 'Klassisch', value: 'Klassisch' },
+    { label: 'Schnellschach', value: 'Schnellschach' },
+    { label: 'Blitz', value: 'Blitz' },
+];
 
 // Load more tournaments for infinite scroll
 const loadMore = async () => {
@@ -129,9 +94,8 @@ const loadMore = async () => {
             page: currentPage.value,
         };
 
-        if (searchTerm.value) {
-            params.searchTerm = searchTerm.value;
-        }
+        if (filters.searchTerm) params.search = filters.searchTerm;
+        if (filters.type) params.type = filters.type;
 
         const response = await axios.get('/tournaments/load-more', { params });
 
