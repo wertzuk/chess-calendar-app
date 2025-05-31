@@ -4,7 +4,7 @@
     <MainLayout>
         <MainHeading class="mb-12">Schachturnier-Kalender</MainHeading>
 
-        <div class="flex gap-2 mb-6">
+        <div class="flex gap-2 mb-6 flex-wrap">
             <FilterButton
                 v-for="t in types"
                 :key="t.value"
