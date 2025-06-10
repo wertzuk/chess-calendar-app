@@ -11,8 +11,8 @@ class TournamentService
 {
     public function fetchTournaments(Request $request, $page = 1)
     {
-        // $query = Tournament::where('start_date', '>=', Carbon::today());
-        $query = Tournament::query();
+        // $query = Tournament::query();
+        $query = Tournament::where('start_date', '>=', Carbon::today());
         $perPage = 25;
 
         if ($request->has('search')) {
