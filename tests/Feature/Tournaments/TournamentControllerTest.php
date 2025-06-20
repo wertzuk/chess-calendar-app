@@ -75,6 +75,8 @@ class TournamentControllerTest extends TestCase
         Tournament::factory()->create(['user_id' => 1]);
         Tournament::factory()->create(['user_id' => 2]);
         Tournament::factory()->create(['user_id' => 3]);
+        Tournament::factory()->create(['user_id' => 3]);
+        Tournament::factory()->create(['user_id' => 3]);
 
         // Act: Make the request as the first created user
         $response = $this->actingAs($users[0])->get(uri: route('home'));
@@ -84,22 +86,18 @@ class TournamentControllerTest extends TestCase
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Home')
                 ->has('tournaments', 4)  // Check that we received 4 tournaments
-                ->has('tournaments.0', fn (Assert $page) => $page
-                    ->where('can.edit', true)
-                    ->where('can.delete', true)
-                    ->etc()
-                )
-                ->has('tournaments.1', fn (Assert $page) => $page
-                    ->where('can.edit', true)
-                    ->where('can.delete', true)
-                    ->etc()
-                )
-                // For a tournament that was created by a different user, edit and delete should not be possible
-                ->has('tournaments.2', fn (Assert $page) => $page
-                    ->where('can.edit', false)
-                    ->where('can.delete', false)
-                    ->etc()
-                )
+                ->where('tournaments', function($tournaments) use ($users) {
+                    foreach ($tournaments as $tournament) {
+                        if ($tournament['user_id'] === $users[0]->id) {
+                            $this->assertTrue($tournament['can']['edit']);
+                            $this->assertTrue($tournament['can']['delete']);
+                        } else {
+                            $this->assertFalse($tournament['can']['edit']);
+                            $this->assertFalse($tournament['can']['delete']);
+                        }
+                    }
+                    return true;
+                })
             );
     }
 
