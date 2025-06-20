@@ -6,9 +6,8 @@ use App\Http\Requests\TournamentRequest;
 use App\Models\Tournament;
 use App\Services\TournamentService;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
-
+use Inertia\Inertia;
 
 class TournamentController extends Controller
 {
