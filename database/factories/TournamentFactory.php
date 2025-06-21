@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Location;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -24,9 +25,9 @@ class TournamentFactory extends Factory
         return [
             'title' => fake()->text(50),
             'user_id' => User::factory(),
+            'location_id' => Location::factory(),
             'chess_type' => fake()->randomElement(['Blitz', 'Schnellschach', 'Klassisch']),
             'time_control' => fake()->numberBetween(1, 100).'+0',
-            'city' => fake()->city(),
             'start_date' => $date,
             'end_date' => $end,
         ];
