@@ -2,7 +2,7 @@
     <Head title="Map" />
     <!--  -->
     <MainLayout>
-        <div class="absolute inset-0 h-[calc(100vh-60px)]">
+        <div class="absolute inset-0 ">
             <div id="map" class="w-full h-full"></div>
         </div>
     </MainLayout>

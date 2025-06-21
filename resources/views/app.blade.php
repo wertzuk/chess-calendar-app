@@ -24,7 +24,7 @@
         <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
     </head>
 
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" style="margin-bottom: 0">
         @inertia
     </body>
 
