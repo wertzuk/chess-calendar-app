@@ -71,10 +71,10 @@ class TournamentController extends Controller
     public function show(Tournament $tournament)
     {
         // Visible for everybody, no auth required
+        $tournament->load('location');
         return Inertia::render('Tournaments/Show', [
             'tournament' => $tournament,
         ]);
-
     }
 
     /**
@@ -85,6 +85,8 @@ class TournamentController extends Controller
         if (Auth::user()->cannot('update', $tournament)) {
             abort(403);
         }
+
+        $tournament->load('location');
 
         return Inertia::render('Tournaments/Edit', [
             'tournament' => $tournament,
