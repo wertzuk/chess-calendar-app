@@ -161,14 +161,14 @@ const isCreate = computed(() => Object.keys(tournament).length === 0);
 
 const form = useForm({
     title: tournament.title,
-    city: tournament.city,
+    city: tournament.location.city,
     chess_type: tournament.chess_type ?? 'Klassisch',
     start_date: convertToGermanDate(tournament?.start_date),
     end_date: convertToGermanDate(tournament?.end_date),
     time_control: tournament.time_control,
     number_of_rounds: tournament.number_of_rounds,
-    street: tournament.street,
-    plz: tournament.plz,
+    street: tournament.location.street,
+    plz: tournament.location.plz,
     organizer: tournament.organizer,
     prize_fund: tournament.prize_fund,
     elo_rated: tournament.elo_rated,

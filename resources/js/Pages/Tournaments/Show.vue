@@ -21,9 +21,9 @@
                 <DescriptionListItem>
                     <template #label>Adresse</template>
                     <template #value
-                        ><span v-if="tournament.street">{{ tournament.street }},</span>
-                        <span v-if="tournament.plz">{{ tournament.plz }}</span>
-                        {{ tournament.city }}</template
+                        ><span v-if="tournament.location.street">{{ tournament.location.street }},</span>
+                        <span v-if="tournament.location.plz">{{ tournament.location.plz }}</span>
+                        {{ tournament.location.city }}</template
                     >
                 </DescriptionListItem>
                 <DescriptionListItem v-if="tournament.prize_fund">

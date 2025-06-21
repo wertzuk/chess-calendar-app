@@ -58,15 +58,11 @@
             <div class="flex gap-2">
                 <IconLocation class="dark:text-gray-400" />
                 <span class="text-sm mb-2 font-light text-gray-700 dark:text-gray-400">{{
-                    tournament.city
+                    tournament.location.city
                 }}</span>
             </div>
         </div>
         <div class="flex flex-wrap gap-2 flex-grow-0 mt-auto">
-            <!-- <Chip class="flex gap-1" isIconChip="true">
-                <IconLocation />
-                <span>{{ tournament.city }}</span>
-            </Chip> -->
             <Chip>{{ tournament.chess_type }}</Chip>
             <Chip v-if="tournament.elo_rated">ELO</Chip>
             <Chip v-if="tournament.dwz_rated">DWZ</Chip>
