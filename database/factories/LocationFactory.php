@@ -8,7 +8,7 @@ class LocationFactory extends Factory
 {
     public function definition(): array
     {
-        $faker = \Faker\Factory::create('de_DE'); // German data
+        $faker = \Faker\Factory::create('de_DE');
 
         return [
             'street' => $faker->streetAddress(),
@@ -19,7 +19,6 @@ class LocationFactory extends Factory
         ];
     }
 
-    // Optional: State for specific German cities
     public function inBerlin(): static
     {
         return $this->state(fn (array $attributes) => [

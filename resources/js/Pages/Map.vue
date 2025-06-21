@@ -27,6 +27,8 @@ onMounted(() => {
         .addTo(map)
         .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
         .openPopup();
+
+    
 });
 </script>
 
