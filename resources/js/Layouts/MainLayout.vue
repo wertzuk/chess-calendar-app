@@ -14,7 +14,6 @@ import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
 
 const showingNavigationDropdown = ref(false);
 const isDark = ref(document.documentElement.classList.contains('dark'));
-console.log(isDark.value);
 
 function toggleTheme() {
     isDark.value = !isDark.value;
