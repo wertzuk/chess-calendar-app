@@ -86,7 +86,7 @@ class TournamentControllerTest extends TestCase
             ->assertInertia(fn (Assert $page) => $page
                 ->component('Home')
                 ->has('tournaments', 4)  // Check that we received 4 tournaments
-                ->where('tournaments', function($tournaments) use ($users) {
+                ->where('tournaments', function ($tournaments) use ($users) {
                     foreach ($tournaments as $tournament) {
                         if ($tournament['user_id'] === $users[0]->id) {
                             $this->assertTrue($tournament['can']['edit']);
@@ -96,6 +96,7 @@ class TournamentControllerTest extends TestCase
                             $this->assertFalse($tournament['can']['delete']);
                         }
                     }
+
                     return true;
                 })
             );

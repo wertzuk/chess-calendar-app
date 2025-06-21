@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Tournament;
+use DateTime;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use DateTime;
 
 class ImportChessResultsData extends Command
 {
@@ -15,6 +15,7 @@ class ImportChessResultsData extends Command
      * @var string
      */
     protected $signature = 'import:csv {file}';
+
     /**
      * The console command description.
      *
@@ -22,23 +23,25 @@ class ImportChessResultsData extends Command
      */
     protected $description = 'Import specific columns from a CSV file into the database';
 
-    
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        function convertDate(string $dateString) {
+        function convertDate(string $dateString)
+        {
             $date = DateTime::createFromFormat('Ymd', $dateString);
             $formattedDate = $date->format('Y-m-d');
+
             return $formattedDate;
         }
 
         $file = $this->argument('file');
 
         // Check if the file exists
-        if (!File::exists($file)) {
+        if (! File::exists($file)) {
             $this->error("The file {$file} does not exist.");
+
             return;
         }
 
@@ -54,16 +57,15 @@ class ImportChessResultsData extends Command
             $extractedData = [
                 'user_id' => 1,
                 'chess_type' => 'Klassisch', // To be edited manually
-                'title' => $row[0] ?? null, 
+                'title' => $row[0] ?? null,
                 'time_control' => $row[10] ?? null,
-                'start_date' => convertDate($row[1]) ?? null, 
-                'end_date' => convertDate($row[2]) ?? null, 
+                'start_date' => convertDate($row[1]) ?? null,
+                'end_date' => convertDate($row[2]) ?? null,
                 'city' => $row[9] ?? null,
                 'number_of_rounds' => $row[16] ?? null,
                 'chess_results_link' => "https://chess-results.com/tnr{$row[18]}.aspx?lan=0",
             ];
 
-            
             // Insert into the database
             Tournament::create($extractedData);
 
@@ -73,7 +75,4 @@ class ImportChessResultsData extends Command
         $this->info('CSV data imported successfully.');
 
     }
-    
-
-    
 }

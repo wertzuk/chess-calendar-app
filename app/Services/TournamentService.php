@@ -23,7 +23,7 @@ class TournamentService
         }
 
         if ($request->has('type')) {
-            $query->where('chess_type',  $request->type);
+            $query->where('chess_type', $request->type);
         }
 
         return $query->orderBy('start_date')
