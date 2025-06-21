@@ -25,16 +25,19 @@ function toggleTheme() {
 
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <div class="min-h-screen bg-gray-100 dark:bg-gray-900 flex flex-col">
             <nav class="border-b border-gray-100 bg-white dark:border-gray-700 dark:bg-gray-800">
                 <!-- Primary Navigation Menu -->
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
                         <div class="flex">
                             <!-- Navigation Links -->
-                            <div class="hidden sm:-my-px sm:flex">
+                            <div class="hidden sm:-my-px sm:flex gap-8">
                                 <NavLink :href="route('home')" :active="route().current('home')">
                                     Home
+                                </NavLink>
+                                <NavLink :href="route('map')" :active="route().current('map')">
+                                    Map
                                 </NavLink>
                             </div>
                         </div>
@@ -181,6 +184,9 @@ function toggleTheme() {
                         <ResponsiveNavLink :href="route('home')" :active="route().current('home')">
                             Home
                         </ResponsiveNavLink>
+                        <ResponsiveNavLink :href="route('map')" :active="route().current('map')">
+                            Map
+                        </ResponsiveNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
@@ -213,7 +219,7 @@ function toggleTheme() {
             </nav>
 
             <!-- Page Content -->
-            <main class="relative">
+            <main class="relative grow">
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
                     <slot />
                 </div>

@@ -19,7 +19,7 @@ Route::get('/', [TournamentController::class, 'index'])->name('home');
 Route::get('/tournaments/load-more', [TournamentController::class, 'loadMore']);
 Route::get('/tournaments/{tournament}', [TournamentController::class, 'show'])->name('tournament.show');
 
-Route::get('/map', [MapController::class, 'index'])->name('map.index');
+Route::get('/map', [MapController::class, 'index'])->name('map');
 
 
 
