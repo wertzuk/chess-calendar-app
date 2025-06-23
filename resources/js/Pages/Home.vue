@@ -20,7 +20,7 @@
         </div>
 
         <div v-if="tournaments.length">
-            <div v-for="(group, month) in groupedTournaments" :key="date">
+            <div v-for="(group, month) in groupedTournaments" :key="month">
                 <ol class="relative border-s border-gray-300 dark:border-gray-700">
                     <li class="ms-4 pb-12">
                         <div
@@ -40,9 +40,9 @@
                 </ol>
             </div>
         </div>
-        <div v-else><Paragraph>Keine Turniere gefunden!</Paragraph></div>
-
-        <!-- <pre class="text-white">{{ groupedTournaments }}</pre> -->
+        <div v-else>
+            <Paragraph>Keine Turniere gefunden!</Paragraph>
+        </div>
 
         <div v-if="showSuccess">
             <ToastSuccess>{{ showSuccess }}</ToastSuccess>
