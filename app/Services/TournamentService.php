@@ -18,10 +18,12 @@ class TournamentService
             ->with('location');
 
         if ($request->has('search')) {
-            $query->whereAny([
-                'title',
-                'city',
-            ], 'like', "%$request->search%");
+            $query->where(function ($q) use ($request) {
+                $q->where('title', 'like', "%{$request->search}%")
+                    ->orWhereHas('location', function ($locationQuery) use ($request) {
+                        $locationQuery->where('city', 'like', "%{$request->search}%");
+                    });
+            });
         }
 
         if ($request->has('type')) {
