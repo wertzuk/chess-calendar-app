@@ -10,21 +10,25 @@
         >
         <FormRow>
             <FormInput
-                v-model="form.city"
-                fieldKey="city"
-                :error="form.errors.city"
-                required
+                v-model="form.street"
+                fieldKey="street"
+                :error="form.errors.street"
                 maxlength="50"
-                >Ort</FormInput
+                >Straße</FormInput
             >
-            <FormSelect
-                v-model="form.chess_type"
-                fieldKey="chess_type"
-                :options="['Klassisch', 'Schnellschach', 'Blitz']"
-                required
-                >Form</FormSelect
+            <FormInput v-model="form.plz" fieldKey="plz" :error="form.errors.plz" maxlength="7"
+                >PLZ</FormInput
             >
         </FormRow>
+        <FormInput
+            v-model="form.city"
+            fieldKey="city"
+            :error="form.errors.city"
+            required
+            maxlength="50"
+            >Ort</FormInput
+        >
+
         <FormRow id="date-range-picker">
             <FormDatePicker
                 v-model="form.start_date"
@@ -40,15 +44,7 @@
                 >Enddatum</FormDatePicker
             >
         </FormRow>
-        <FormInput
-            v-model="form.time_control"
-            fieldKey="time_control"
-            required
-            :error="form.errors.time_control"
-            maxlength="200"
-            >Zeitkontrolle</FormInput
-        >
-        <FormRow class="mb-10">
+        <FormRow class="">
             <FormInput
                 v-model="form.number_of_rounds"
                 fieldKey="number_of_rounds"
@@ -58,73 +54,69 @@
                 :error="form.errors.number_of_rounds"
                 >Anzahl Runden</FormInput
             >
-        </FormRow>
-        <FormCollapseButton @click="detailsActive = !detailsActive" :active="detailsActive" />
-        <div v-if="detailsActive">
-            <FormRow>
-                <FormInput
-                    v-model="form.street"
-                    fieldKey="street"
-                    :error="form.errors.street"
-                    maxlength="50"
-                    >Straße</FormInput
-                >
-                <FormInput v-model="form.plz" fieldKey="plz" :error="form.errors.plz" maxlength="7"
-                    >PLZ</FormInput
-                >
-            </FormRow>
-            <FormInput
-                v-model="form.organizer"
-                fieldKey="organizer"
-                :error="form.errors.organizer"
-                maxlength="50"
-                >Ausrichter</FormInput
+            <FormSelect
+                v-model="form.chess_type"
+                fieldKey="chess_type"
+                :options="['Klassisch', 'Schnellschach', 'Blitz']"
+                required
+                >Form</FormSelect
             >
-            <FormInput
+        </FormRow>
+        <FormInput
+            v-model="form.time_control"
+            fieldKey="time_control"
+            required
+            :error="form.errors.time_control"
+            maxlength="200"
+            >Zeitkontrolle</FormInput
+        >
+        <!-- <FormCollapseButton @click="detailsActive = !detailsActive" :active="detailsActive" />
+        <div v-if="detailsActive"> -->
+        <!-- <FormInput
                 v-model="form.prize_fund"
                 fieldKey="prize_fund"
                 :error="form.errors.prize_fund"
                 maxlength="50"
                 >Preisfonds</FormInput
+            > -->
+        <FormRow>
+            <FormCheckbox v-model="form.elo_rated" fieldKey="elo_rated"
+                >ELO Auswertung</FormCheckbox
             >
-            <FormRow>
-                <FormCheckbox v-model="form.elo_rated" fieldKey="elo_rated"
-                    >ELO Auswertung</FormCheckbox
-                >
-                <FormCheckbox v-model="form.dwz_rated" fieldKey="dwz_rated"
-                    >DWZ Auswertung</FormCheckbox
-                >
-            </FormRow>
-            <FormRow>
-                <FormCheckbox v-model="form.rapid_elo_rated" fieldKey="rapid_elo_rated"
-                    >Rapid ELO Auswertung</FormCheckbox
-                >
-                <FormCheckbox v-model="form.blitz_elo_rated" fieldKey="blitz_elo_rated"
-                    >Blitz ELO Auswertung</FormCheckbox
-                >
-            </FormRow>
-            <FormInput
-                type="url"
-                v-model="form.chess_results_link"
-                fieldKey="chess_results_link"
-                :error="form.errors.chess_results_link"
-                >Chess-Results Link</FormInput
+            <FormCheckbox v-model="form.dwz_rated" fieldKey="dwz_rated"
+                >DWZ Auswertung</FormCheckbox
             >
-            <FormInput
-                type="url"
-                v-model="form.website_link"
-                fieldKey="website_link"
-                :error="form.errors.website_link"
-                >Link zur Webseite</FormInput
+        </FormRow>
+        <FormRow>
+            <FormCheckbox v-model="form.rapid_elo_rated" fieldKey="rapid_elo_rated"
+                >Rapid ELO Auswertung</FormCheckbox
             >
-            <FormInput
-                type="url"
-                v-model="form.announcement_link"
-                fieldKey="announcement_link"
-                :error="form.errors.announcement_link"
-                >Link zur Ausschreibung</FormInput
+            <FormCheckbox v-model="form.blitz_elo_rated" fieldKey="blitz_elo_rated"
+                >Blitz ELO Auswertung</FormCheckbox
             >
-        </div>
+        </FormRow>
+        <FormInput
+            type="url"
+            v-model="form.chess_results_link"
+            fieldKey="chess_results_link"
+            :error="form.errors.chess_results_link"
+            >Chess-Results Link</FormInput
+        >
+        <FormInput
+            type="url"
+            v-model="form.website_link"
+            fieldKey="website_link"
+            :error="form.errors.website_link"
+            >Link zur Webseite</FormInput
+        >
+        <FormInput
+            type="url"
+            v-model="form.announcement_link"
+            fieldKey="announcement_link"
+            :error="form.errors.announcement_link"
+            >Link zur Ausschreibung</FormInput
+        >
+        <!-- </div> -->
 
         <div class="flex justify-between">
             <LinkButton type="button" class="mt-8" href="/">Zurück</LinkButton>
