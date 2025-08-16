@@ -43,7 +43,7 @@ function toggleTheme() {
                             <div class="relative ms-3 flex gap-4 items-center">
                                 <Button
                                     variant="secondary"
-                                    class="border-none focus:ring-0 transparent"
+                                    class="border-none focus:ring-0 !bg-white dark:!bg-gray-800"
                                     @click="toggleTheme"
                                 >
                                     <IconLight v-if="isDark" />
@@ -117,7 +117,7 @@ function toggleTheme() {
                         <div class="sm:hidden flex items-center gap-2">
                             <Button
                                 variant="secondary"
-                                class="border-none focus:ring-0 px-2"
+                                class="border-none focus:ring-0 !bg-white dark:!bg-gray-800"
                                 @click="toggleTheme"
                             >
                                 <IconLight v-if="isDark" />
