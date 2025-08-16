@@ -44,7 +44,7 @@ defineProps({
                         ></DateRange>
                     </td>
                     <td class="px-6 py-4">{{ tournament.chess_type }}</td>
-                    <td class="px-6 py-4">{{ tournament.location.city }}</td>
+                    <td class="px-6 py-4">{{ tournament.location?.city }}</td>
                 </tr>
                 </tbody>
             </table>
