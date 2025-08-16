@@ -27,8 +27,9 @@
                             class="absolute w-3 h-3 bg-gray-300 rounded-full mt-1.5 -start-1.5 border border-white dark:border-gray-900 dark:bg-gray-700"
                         ></div>
                         <time class="mb-1 text-sm font-normal leading-none text-gray-500">{{
-                            month
-                        }}</time>
+                                month
+                            }}
+                        </time>
                         <div class="mt-2 grid grid-cols-fill-300 gap-4 mx-auto">
                             <TournamentCard
                                 :tournament="tournament"
@@ -39,6 +40,7 @@
                     </li>
                 </ol>
             </div>
+
         </div>
         <div v-else>
             <Paragraph>Keine Turniere gefunden!</Paragraph>
@@ -54,7 +56,7 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { useTournaments, useInfiniteScroll, useSearch, useFlashMessages } from '@/composables';
 import { Head } from '@inertiajs/vue3';
 import { usePage } from '@inertiajs/vue3';
@@ -69,7 +71,6 @@ import ToastError from '@/Components/Toast/ToastError.vue';
 
 const initialTournaments = usePage().props.tournaments ?? [];
 const tournaments = ref(initialTournaments);
-const isLoggedIn = computed(() => !!usePage().props.auth.user);
 const loading = ref(false);
 
 const { groupedTournaments } = useTournaments(tournaments);
@@ -79,7 +80,7 @@ const types = [
     { label: 'Alle', value: '' },
     { label: 'Klassisch', value: 'Klassisch' },
     { label: 'Schnellschach', value: 'Schnellschach' },
-    { label: 'Blitz', value: 'Blitz' },
+    { label: 'Blitz', value: 'Blitz' }
 ];
 
 // Load more tournaments for infinite scroll
@@ -91,7 +92,7 @@ const loadMore = async () => {
 
     try {
         const params = {
-            page: currentPage.value,
+            page: currentPage.value
         };
 
         if (filters.searchTerm) params.search = filters.searchTerm;
