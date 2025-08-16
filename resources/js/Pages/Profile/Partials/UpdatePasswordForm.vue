@@ -1,10 +1,10 @@
 <script setup>
 import InputError from '@/Components/Auth/InputError.vue';
 import InputLabel from '@/Components/Auth/InputLabel.vue';
-import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import TextInput from '@/Components/Auth/TextInput.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Button from '@/Components/Buttons/Button.vue';
 
 const passwordInput = ref(null);
 const currentPasswordInput = ref(null);
@@ -90,7 +90,7 @@ const updatePassword = () => {
             </div>
 
             <div class="flex items-center gap-4">
-                <PrimaryButton :disabled="form.processing">Speichern</PrimaryButton>
+                <Button :disabled="form.processing">Speichern</Button>
 
                 <Transition
                     enter-active-class="transition ease-in-out"

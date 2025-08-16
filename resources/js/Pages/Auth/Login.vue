@@ -3,9 +3,9 @@ import Checkbox from '@/Components/Auth/Checkbox.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/Auth/InputError.vue';
 import InputLabel from '@/Components/Auth/InputLabel.vue';
-import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import TextInput from '@/Components/Auth/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Button from '@/Components/Buttons/Button.vue';
 
 defineProps({
     canResetPassword: {
@@ -87,13 +87,13 @@ const submit = () => {
                     Passwort vergessen?
                 </Link>
 
-                <PrimaryButton
+                <Button
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Log in
-                </PrimaryButton>
+                </Button>
             </div>
         </form>
     </GuestLayout>

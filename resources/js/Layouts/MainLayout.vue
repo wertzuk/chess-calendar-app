@@ -6,10 +6,8 @@ import NavLink from '@/Components/Menu/MenuNavLink.vue';
 import ResponsiveNavLink from '@/Components/Menu/MenuNavLinkResponsive.vue';
 import { Link } from '@inertiajs/vue3';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
-import IconButton from '@/Components/Buttons/IconButton.vue';
 import IconLight from '@/Components/Icons/IconLight.vue';
 import IconDark from '@/Components/Icons/IconDark.vue';
-import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
 
 const showingNavigationDropdown = ref(false);

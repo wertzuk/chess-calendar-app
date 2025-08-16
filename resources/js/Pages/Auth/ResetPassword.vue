@@ -2,9 +2,9 @@
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/Auth/InputError.vue';
 import InputLabel from '@/Components/Auth/InputLabel.vue';
-import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import TextInput from '@/Components/Auth/TextInput.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import Button from '@/Components/Buttons/Button.vue';
 
 const props = defineProps({
     email: {
@@ -83,12 +83,12 @@ const submit = () => {
             </div>
 
             <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton
+                <Button
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                 >
                     Reset Password
-                </PrimaryButton>
+                </Button>
             </div>
         </form>
     </GuestLayout>

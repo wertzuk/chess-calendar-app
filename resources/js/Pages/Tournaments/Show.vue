@@ -46,13 +46,16 @@
                     <template #label>Links</template>
                     <template #value>
                         <div class="mt-4 sm:mt-0 flex flex-wrap">
-                            <ExternalLinkButton
+                            <Button
                                 v-for="link in availableLinks"
                                 :key="link.label"
                                 :href="link.url"
+                                as="a"
+                                target="_blank"
+                                variant="secondary"
                             >
                                 {{ link.label }}
-                            </ExternalLinkButton>
+                            </Button>
                         </div>
                     </template>
                 </DescriptionListItem>
@@ -70,8 +73,8 @@ import MainLayout from '@/Layouts/MainLayout.vue';
 import LinkButton from '@/Components/Buttons/LinkButton.vue';
 import SecondaryHeading from '@/Components/Common/SecondaryHeading.vue';
 import DateRange from '@/Components/Common/DateRange.vue';
-import ExternalLinkButton from '@/Components/Buttons/ExternalLinkButton.vue';
 import DescriptionListItem from '@/Components/DescriptionList/DescriptionListItem.vue';
+import Button from '@/Components/Buttons/Button.vue';
 
 const { tournament } = defineProps({ tournament: Object });
 
