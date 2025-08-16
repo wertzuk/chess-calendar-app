@@ -61,6 +61,7 @@ const buttonClasses = computed(() => {
     <button
         v-else
         :class="buttonClasses"
+        v-bind="$attrs"
     >
         <slot />
     </button>
