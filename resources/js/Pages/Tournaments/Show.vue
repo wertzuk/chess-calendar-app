@@ -60,7 +60,7 @@
                     </template>
                 </DescriptionListItem>
             </dl>
-            <LinkButton class="mt-16" href="/">Zurück</LinkButton>
+            <Button as="Link" class="mt-16" href="/">Zurück</Button>
         </div>
     </MainLayout>
 </template>
@@ -70,7 +70,6 @@ import { Head } from '@inertiajs/vue3';
 import { computed } from 'vue';
 
 import MainLayout from '@/Layouts/MainLayout.vue';
-import LinkButton from '@/Components/Buttons/LinkButton.vue';
 import SecondaryHeading from '@/Components/Common/SecondaryHeading.vue';
 import DateRange from '@/Components/Common/DateRange.vue';
 import DescriptionListItem from '@/Components/DescriptionList/DescriptionListItem.vue';

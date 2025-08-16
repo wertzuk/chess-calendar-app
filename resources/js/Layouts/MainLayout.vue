@@ -5,10 +5,9 @@ import DropdownLink from '@/Components/Menu/MenuDropdownLink.vue';
 import NavLink from '@/Components/Menu/MenuNavLink.vue';
 import ResponsiveNavLink from '@/Components/Menu/MenuNavLinkResponsive.vue';
 import { Link } from '@inertiajs/vue3';
-import LinkButton from '@/Components/Buttons/LinkButton.vue';
 import IconLight from '@/Components/Icons/IconLight.vue';
 import IconDark from '@/Components/Icons/IconDark.vue';
-import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
+import Button from '@/Components/Buttons/Button.vue';
 
 const showingNavigationDropdown = ref(false);
 const isDark = ref(document.documentElement.classList.contains('dark'));
@@ -42,21 +41,22 @@ function toggleTheme() {
                         <div class="hidden sm:ms-6 sm:flex sm:items-center">
                             <!-- Settings Dropdown -->
                             <div class="relative ms-3 flex gap-4 items-center">
-                                <SecondaryButton
-                                    class="border-none focus:ring-0"
+                                <Button
+                                    variant="secondary"
+                                    class="border-none focus:ring-0 transparent"
                                     @click="toggleTheme"
                                 >
                                     <IconLight v-if="isDark" />
                                     <IconDark v-else />
-                                </SecondaryButton>
+                                </Button>
 
-                                <LinkButton
+                                <Button
                                     :href="route('tournaments.create')"
+                                    as="Link"
                                     preserve-scroll
-                                    as="button"
                                     class="sm:block"
                                     v-if="$page.props.auth.user"
-                                    >Turnier erstellen</LinkButton
+                                    >Turnier erstellen</Button
                                 >
                                 <Dropdown align="right" width="48" v-if="$page.props.auth.user">
                                     <template #trigger>
@@ -115,19 +115,20 @@ function toggleTheme() {
                         </div>
 
                         <div class="sm:hidden flex items-center gap-2">
-                            <SecondaryButton
+                            <Button
+                                variant="secondary"
                                 class="border-none focus:ring-0 px-2"
                                 @click="toggleTheme"
                             >
                                 <IconLight v-if="isDark" />
                                 <IconDark v-else />
-                            </SecondaryButton>
-                            <LinkButton
+                            </Button>
+                            <Button
                                 :href="route('tournaments.create')"
                                 preserve-scroll
-                                as="button"
+                                as="Link"
                                 v-if="$page.props.auth.user"
-                                >Turnier erstellen</LinkButton
+                                >Turnier erstellen</Button
                             >
 
                             <!-- Hamburger -->
