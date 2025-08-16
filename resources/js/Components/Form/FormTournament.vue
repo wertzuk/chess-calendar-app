@@ -1,127 +1,117 @@
 <template>
     <form method="post" @submit.prevent="handleSubmit" class="max-w-2xl mx-auto">
         <FormInput
+            label="Turnier"
             v-model="form.title"
-            fieldKey="title"
+            name="title"
             :error="form.errors.title"
             required
             maxlength="100"
-            >Turnier</FormInput
-        >
+        />
         <FormRow>
             <FormInput
+                label="Straße"
                 v-model="form.street"
-                fieldKey="street"
+                name="street"
                 :error="form.errors.street"
                 maxlength="50"
-                >Straße</FormInput
-            >
-            <FormInput v-model="form.plz" fieldKey="plz" :error="form.errors.plz" maxlength="7"
-                >PLZ</FormInput
-            >
+            />
+            <FormInput label="PLZ" v-model="form.plz" name="plz" :error="form.errors.plz" maxlength="7" />
         </FormRow>
         <FormInput
+            label="Ort"
             v-model="form.city"
-            fieldKey="city"
+            name="city"
             :error="form.errors.city"
             required
             maxlength="50"
-            >Ort</FormInput
-        >
+        />
 
         <FormRow id="date-range-picker">
             <FormDatePicker
+
                 v-model="form.start_date"
-                fieldKey="start_date"
+                name="start_date"
                 required
                 :error="form.errors.start_date"
-                >Startdatum</FormDatePicker
-            >
+                label="Startdatum"
+            />
             <FormDatePicker
                 v-model="form.end_date"
-                fieldKey="end_date"
+                label="Enddatum"
+                name="end_date"
                 :error="form.errors.end_date"
-                >Enddatum</FormDatePicker
-            >
+            />
         </FormRow>
         <FormRow class="">
             <FormInput
+                label="Anzahl Runden"
                 v-model="form.number_of_rounds"
-                fieldKey="number_of_rounds"
+                name="number_of_rounds"
                 type="number"
                 min="0"
                 max="100"
                 :error="form.errors.number_of_rounds"
-                >Anzahl Runden</FormInput
-            >
+            />
             <FormSelect
+                label="Form"
                 v-model="form.chess_type"
-                fieldKey="chess_type"
+                name="chess_type"
                 :options="['Klassisch', 'Schnellschach', 'Blitz']"
                 required
-                >Form</FormSelect
-            >
+            />
         </FormRow>
         <FormInput
+            label="Zeitkontrolle"
             v-model="form.time_control"
-            fieldKey="time_control"
+            name="time_control"
             required
             :error="form.errors.time_control"
             maxlength="200"
-            >Zeitkontrolle</FormInput
-        >
-        <!-- <FormCollapseButton @click="detailsActive = !detailsActive" :active="detailsActive" />
-        <div v-if="detailsActive"> -->
-        <!-- <FormInput
-                v-model="form.prize_fund"
-                fieldKey="prize_fund"
-                :error="form.errors.prize_fund"
-                maxlength="50"
-                >Preisfonds</FormInput
-            > -->
+        />
         <FormRow>
-            <FormCheckbox v-model="form.elo_rated" fieldKey="elo_rated"
-                >ELO Auswertung</FormCheckbox
-            >
-            <FormCheckbox v-model="form.dwz_rated" fieldKey="dwz_rated"
-                >DWZ Auswertung</FormCheckbox
-            >
+            <FormCheckbox v-model="form.elo_rated" name="elo_rated">
+                ELO Auswertung
+            </FormCheckbox>
+            <FormCheckbox v-model="form.dwz_rated" name="dwz_rated">
+                DWZ Auswertung
+            </FormCheckbox>
         </FormRow>
         <FormRow>
-            <FormCheckbox v-model="form.rapid_elo_rated" fieldKey="rapid_elo_rated"
-                >Rapid ELO Auswertung</FormCheckbox
-            >
-            <FormCheckbox v-model="form.blitz_elo_rated" fieldKey="blitz_elo_rated"
-                >Blitz ELO Auswertung</FormCheckbox
-            >
+            <FormCheckbox v-model="form.rapid_elo_rated" name="rapid_elo_rated">
+                Rapid ELO Auswertung
+            </FormCheckbox>
+            <FormCheckbox v-model="form.blitz_elo_rated" name="blitz_elo_rated">
+                Blitz ELO Auswertung
+            </FormCheckbox>
         </FormRow>
         <FormInput
+            label="Chess-Results Link"
             type="url"
             v-model="form.chess_results_link"
-            fieldKey="chess_results_link"
+            name="chess_results_link"
             :error="form.errors.chess_results_link"
-            >Chess-Results Link</FormInput
-        >
+        />
         <FormInput
+            label="Link zur Webseite"
             type="url"
             v-model="form.website_link"
-            fieldKey="website_link"
+            name="website_link"
             :error="form.errors.website_link"
-            >Link zur Webseite</FormInput
-        >
+        />
         <FormInput
+            label="Link zur Ausschreibung"
             type="url"
             v-model="form.announcement_link"
-            fieldKey="announcement_link"
+            name="announcement_link"
             :error="form.errors.announcement_link"
-            >Link zur Ausschreibung</FormInput
-        >
-        <!-- </div> -->
+        />
 
         <div class="flex justify-between">
-            <Button as="Link"  variant="secondary" class="mt-8" href="/">Zurück</Button>
+            <Button as="Link" variant="secondary" class="mt-8" href="/">Zurück</Button>
             <Button class="mt-8" v-if="isCreate"
-                >Erstellen</Button
+            >Erstellen
+            </Button
             >
             <Button class="mt-8" v-else>Speichern</Button>
         </div>
@@ -142,7 +132,7 @@ import Button from '@/Components/Buttons/Button.vue';
 
 const { errors, tournament } = defineProps({
     errors: Array,
-    tournament: { type: Object, required: false, default: () => ({}) },
+    tournament: { type: Object, required: false, default: () => ({}) }
 });
 
 const isCreate = computed(() => Object.keys(tournament).length === 0);
@@ -165,7 +155,7 @@ const form = useForm({
     rapid_elo_rated: tournament.rapid_elo_rated,
     chess_results_link: tournament.chess_results_link,
     website_link: tournament.website_link,
-    announcement_link: tournament.announcement_link,
+    announcement_link: tournament.announcement_link
 });
 console.log(form);
 
@@ -174,7 +164,7 @@ onMounted(() => {
 
     const options = {
         autohide: true,
-        format: 'dd.mm.yyyy',
+        format: 'dd.mm.yyyy'
     };
 
     if (dateInput) {

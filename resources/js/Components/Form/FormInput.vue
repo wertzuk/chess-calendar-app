@@ -1,10 +1,10 @@
 <template>
     <div class="mb-6 w-full">
-        <FormLabel :fieldKey="fieldKey"><slot></slot></FormLabel>
+        <FormLabel :target="name">{{label}}</FormLabel>
         <input
             type="text"
-            :id="fieldKey"
-            :name="fieldKey"
+            :id="name"
+            :name="name"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-base rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             @input="$emit('update:modelValue', $event.target.value)"
             :value="props.modelValue"
@@ -22,5 +22,24 @@ import FormLabel from './FormLabel.vue';
 defineOptions({
     inheritAttrs: false,
 });
-const props = defineProps(['modelValue', 'fieldKey', 'error']);
+const props = defineProps({
+    modelValue: {
+        required: true,
+    },
+    label: {
+        type: String,
+        required: true,
+        default: '',
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    error: {
+        type: Object,
+        required: false
+    }
+});
+
+
 </script>
