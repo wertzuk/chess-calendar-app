@@ -157,7 +157,6 @@ const form = useForm({
     website_link: tournament.website_link,
     announcement_link: tournament.announcement_link
 });
-console.log(form);
 
 onMounted(() => {
     const dateInput = document.getElementById('date-range-picker');
@@ -171,8 +170,6 @@ onMounted(() => {
         new DateRangePicker(dateInput, options);
     }
 });
-
-const detailsActive = ref(false);
 
 const emit = defineEmits(['submitForm']);
 
