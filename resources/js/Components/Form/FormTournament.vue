@@ -119,13 +119,11 @@
         <!-- </div> -->
 
         <div class="flex justify-between">
-            <LinkButton type="button" class="mt-8" href="/">Zurück</LinkButton>
-            <PrimaryButton class="mt-8 dark:bg-green-800 dark:hover:bg-green-900" v-if="isCreate"
-                >Erstellen</PrimaryButton
+            <Button as="Link"  variant="secondary" class="mt-8" href="/">Zurück</Button>
+            <Button class="mt-8" v-if="isCreate"
+                >Erstellen</Button
             >
-            <PrimaryButton class="mt-8 dark:bg-green-800 dark:hover:bg-green-900" v-else
-                >Speichern</PrimaryButton
-            >
+            <Button class="mt-8" v-else>Speichern</Button>
         </div>
     </form>
 </template>
@@ -136,13 +134,11 @@ import { DateRangePicker } from 'flowbite-datepicker';
 import { useForm } from '@inertiajs/vue3';
 import { convertToGermanDate } from '@/helpers';
 import FormInput from '@/Components/Form/FormInput.vue';
-import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
 import FormDatePicker from '@/Components/Form/FormDatePicker.vue';
 import FormSelect from '@/Components/Form/FormSelect.vue';
 import FormCheckbox from '@/Components/Form/FormCheckbox.vue';
 import FormRow from '@/Components/Form/FormRow.vue';
-import LinkButton from '@/Components/Buttons/LinkButton.vue';
-import FormCollapseButton from '@/Components/Form/FormCollapseButton.vue';
+import Button from '@/Components/Buttons/Button.vue';
 
 const { errors, tournament } = defineProps({
     errors: Array,

@@ -76,17 +76,23 @@
                 Sind Sie sicher?
             </h2>
 
-            <div class="mt-6 cl flex justify-center">
-                <SecondaryButton class="mb-2" @click="closeModal"> Nein </SecondaryButton>
+            <div class="mt-6 cl flex justify-center gap-2">
+                <Button
+                    variant="secondary"
+                    @click="closeModal"
+                >
+                    Nein
+                </Button>
 
-                <DangerButton
+                <Button
                     class="ms-3"
+                    variant="danger"
                     :class="{ 'opacity-25': form.processing }"
                     :disabled="form.processing"
                     @click="destroy"
                 >
                     Ja
-                </DangerButton>
+                </Button>
             </div>
         </div>
     </Modal>
@@ -97,13 +103,12 @@ import { onMounted, ref } from 'vue';
 import { initFlowbite } from 'flowbite';
 import { Link, useForm, router } from '@inertiajs/vue3';
 import Chip from '@/Components/Common/Chip.vue';
-import DangerButton from './Buttons/DangerButton.vue';
-import SecondaryButton from './Buttons/SecondaryButton.vue';
 import Modal from './Common/Modal.vue';
 import IconLocation from '@/Components/Icons/IconLocation.vue';
 import IconDots from '@/Components/Icons/IconDots.vue';
 import DateRange from './Common/DateRange.vue';
 import IconCalendar from './Icons/IconCalendar.vue';
+import Button from '@/Components/Buttons/Button.vue';
 
 const props = defineProps(['tournament']);
 const form = useForm({});
